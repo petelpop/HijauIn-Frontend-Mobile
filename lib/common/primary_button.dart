@@ -9,7 +9,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback function;
   final Color textColor;
   final double fontSize;
-  final double fontWeight;
+  final FontWeight fontWeight;
   final double borderRadius;
   final double lineHeight;
   final double letterSpacing;
@@ -21,7 +21,7 @@ class PrimaryButton extends StatelessWidget {
     this.textColor = Colors.white, 
     this.backgroundColor = const Color(0xFF008F66),
     this.fontSize = 14,
-    this.fontWeight = 400,
+    this.fontWeight = FontWeight.w400,
     this.width = 100,
     this.height = 50,
     this.borderRadius = 16,

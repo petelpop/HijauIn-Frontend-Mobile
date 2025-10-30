@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
+import 'package:hijauin_frontend_mobile/features/onboarding/presentation/views/onboarding_page.dart';
+import 'package:sizer/sizer.dart';
 
 class SplashPage extends StatefulWidget {
   static const String routeName = 'splash-page';
@@ -14,14 +17,13 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/onboarding-page');
+    Future.delayed(const Duration(seconds: 2), () {
+      context.pushNamed(OnboardingPage.routeName);
     });
   }
 
@@ -35,14 +37,14 @@ class _SplashPageState extends State<SplashPage> {
           Center(
             child: Image.asset(
               Constants.icHijauin,
-              width: 150,
-              height: 150,
+              width: 50.w,
             ),
           ),
           Center(
             child: PrimaryText(
               text: "HijauIn",
-              fontWeight: 600),
+              fontSize: 24,
+              fontWeight: FontWeight.w600),
           )
         ],
       ),

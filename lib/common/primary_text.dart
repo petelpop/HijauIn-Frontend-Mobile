@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PrimaryText extends StatelessWidget {
   String? text;
   double? fontSize;
   Color? color;
-  double? fontWeight;
+  FontWeight? fontWeight;
   double? letterSpacing;
   double? lineHeight;
   TextAlign? textAlign;
   TextOverflow? textOverflow;
   int? maxLines;
 
-  PrimaryText({
-    super.key, 
-    required this.text, 
-    this.fontSize = 14,
-    this.color = const Color(0xFF008F66),
-    this.fontWeight = 400,
-    this.textAlign = null,
-    this.letterSpacing = 0,
-    this.lineHeight = 0,
-    this.textOverflow = null,
-    this.maxLines = null});
+  PrimaryText(
+      {super.key,
+      required this.text,
+      this.fontSize = 14,
+      this.color = const Color(0xFF008F66),
+      this.fontWeight = FontWeight.w400,
+      this.textAlign = null,
+      this.letterSpacing = 0,
+      this.lineHeight = 0,
+      this.textOverflow = null,
+      this.maxLines = null});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text!,
       style: GoogleFonts.plusJakartaSans(
-        color: color,
-        fontSize: fontSize,
-        letterSpacing: letterSpacing,
-        height: lineHeight
-      ),
+          fontWeight: fontWeight,
+          color: color,
+          fontSize: fontSize,
+          letterSpacing: letterSpacing,
+          height: lineHeight),
       textAlign: textAlign,
       overflow: textOverflow,
       maxLines: maxLines,
