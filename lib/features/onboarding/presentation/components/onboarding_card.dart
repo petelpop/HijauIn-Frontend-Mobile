@@ -17,7 +17,7 @@ class OnboardingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.h),
+      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(32),
         boxShadow: [
@@ -33,7 +33,7 @@ class OnboardingCard extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
-            padding: EdgeInsets.all(6.w),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.5.h),
             decoration: BoxDecoration(
               color: whiteColor.withOpacity(0.7),
               borderRadius: BorderRadius.circular(32),
@@ -43,12 +43,13 @@ class OnboardingCard extends StatelessWidget {
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
                   child: Container(
-                    width: 65.w,
-                    height: 65.w,
+                    width: 50.w,
+                    height: 50.w,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                     ),
@@ -56,13 +57,13 @@ class OnboardingCard extends StatelessWidget {
                       child: Center(
                         child: Image.asset(
                           data.imagePath,
-                          width: 60.w,
-                          height: 60.w,
+                          width: 45.w,
+                          height: 45.w,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(
                               Icons.air,
-                              size: 35.w,
+                              size: 28.w,
                               color: primaryColor400,
                             );
                           },
@@ -71,23 +72,23 @@ class OnboardingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 4.h),
+                SizedBox(height: 2.5.h),
                 PrimaryText(
                   text: data.title,
-                  fontSize: 22,
+                  fontSize: 19,
                   fontWeight: FontWeight.w700,
                   color: neutralDefault,
                   textAlign: TextAlign.left,
                   lineHeight: 1.3,
                 ),
-                SizedBox(height: 2.h),
+                SizedBox(height: 1.2.h),
                 PrimaryText(
                   text: data.description,
-                  fontSize: 14,
+                  fontSize: 12.5,
                   fontWeight: FontWeight.w400,
                   color: neutralSecondary,
                   textAlign: TextAlign.left,
-                  lineHeight: 1.6,
+                  lineHeight: 1.45,
                 ),
               ],
             ),

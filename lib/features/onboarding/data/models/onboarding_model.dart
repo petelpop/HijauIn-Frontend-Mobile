@@ -19,14 +19,14 @@ final List<OnboardingModel> onboardingData = [
   ),
   OnboardingModel(
     imagePath: 'assets/images/img_onboarding_2.png',
-    title: 'Dapatkan Rekomendasi\nAktivitas Sehat',
+    title: 'Bantu Pilah Sampah\ndengan Mudah',
     description:
-        'Terima saran aktivitas outdoor berdasarkan kualitas udara. Hijauin membantu kamu memilih waktu terbaik untuk beraktivitas di luar ruangan.',
+        'Pelajari cara mengenali dan memilah sampah organik, anorganik, dan B3. Jadikan kebiasaan kecil ini langkah besar untuk lingkungan yang bersih.',
   ),
   OnboardingModel(
     imagePath: 'assets/images/img_onboarding_3.png',
-    title: 'Lindungi Kesehatan\nKamu & Keluarga',
+    title: 'Temukan Tempat Sampah\nTerdekat',
     description:
-        'Dapatkan notifikasi saat kualitas udara buruk. Jaga kesehatan keluarga dengan informasi yang akurat dan terpercaya setiap saat.',
+        'Tidak perlu bingung lagi! Temukan lokasi tempat sampah terdekat dari posisi kamu agar membuang sampah jadi lebih mudah dan tepat.',
   ),
 ];

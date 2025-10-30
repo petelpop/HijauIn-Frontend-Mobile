@@ -59,6 +59,7 @@ class OnboardingView extends StatelessWidget {
             child: BlocBuilder<OnboardingCubit, OnboardingState>(
               builder: (context, state) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -84,9 +85,10 @@ class OnboardingView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 4.h,
+                      height: 2.h,
                     ),
-                    Expanded(
+                    SizedBox(
+                      height: 52.h,
                       child: PageView.builder(
                         controller: cubit.pageController,
                         physics: const NeverScrollableScrollPhysics(),
@@ -107,6 +109,9 @@ class OnboardingView extends StatelessWidget {
                     OnboardingDots(
                       onActivePage: state.currentIndex,
                     ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
                     OnboardingNavigation(
                       showPrevious: !state.isFirstPage,
                       onPrevious: () => cubit.previousPage(),
@@ -117,7 +122,10 @@ class OnboardingView extends StatelessWidget {
                           cubit.nextPage();
                         }
                       },
-                    )
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
                   ],
                 );
               },
