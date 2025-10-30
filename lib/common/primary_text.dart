@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PrimaryText extends StatelessWidget {
   String? text;
@@ -27,12 +28,7 @@ class PrimaryText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text!,
-      style: TextStyle(
-        fontFamily: 'Satoshi',
-        fontVariations: [
-          FontVariation(
-            "wght", fontWeight!)
-        ],
+      style: GoogleFonts.plusJakartaSans(
         color: color,
         fontSize: fontSize,
         letterSpacing: letterSpacing,
