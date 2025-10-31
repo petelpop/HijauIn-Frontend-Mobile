@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
+import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/data/models/onboarding_model.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/components/onboarding_card.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/components/onboarding_dots.dart';
@@ -62,7 +64,8 @@ class OnboardingView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -72,7 +75,7 @@ class OnboardingView extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              
+                              context.pushNamed(LoginPage.routeName);
                             },
                             child: PrimaryText(
                               text: "Lewati",
@@ -117,7 +120,7 @@ class OnboardingView extends StatelessWidget {
                       onPrevious: () => cubit.previousPage(),
                       onNext: () {
                         if (state.isLastPage) {
-                          
+                          context.pushNamed(LoginPage.routeName);
                         } else {
                           cubit.nextPage();
                         }

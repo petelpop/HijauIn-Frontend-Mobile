@@ -9,6 +9,7 @@ Color neutralAccent1 = const Color(0xFFA6A6A6);
 Color neutralAccent2 = const Color(0xFFD2D2D2);
 Color neutralGray = const Color(0xFFE9E9E9);
 Color neutralLight = const Color(0xFFF4F4F4);
+Color redColor = const Color(0xFFFF0000);
 
 // primary colors
 Color primaryColor100 = const Color(0xFFD7F0EA);
