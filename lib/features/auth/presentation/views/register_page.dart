@@ -1,8 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/auth_form.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
+import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_button.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
@@ -35,236 +35,245 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5.h),
-                  
-                  Center(
-                    child: Image.asset(
-                      'assets/images/img_register_vector.png',
-                      width: 45.w,
-                      height: 45.w,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.person_add_outlined,
-                          size: 35.w,
-                          color: primaryColor600,
-                        );
-                      },
-                    ),
-                  ),
-                  
-                  SizedBox(height: 3.5.h),
-                  
-                  // Register Title
-                  PrimaryText(
-                    text: 'Register',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: neutralDefault,
-                  ),
-                  
-                  SizedBox(height: 1.5.h),
-                  
-                  // Subtitle
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2.w),
-                    child: PrimaryText(
-                      text: 'Daftar sekarang dan mulai berpera untuk mencipatakan lingkungan yang lebih sehat.',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: neutralSecondary,
-                      textAlign: TextAlign.center,
-                      lineHeight: 1.5,
-                    ),
-                  ),
-                  
-                  SizedBox(height: 3.5.h),
-                  
-                  // Username Form
-                  AuthForm(
-                    hintText: 'Username',
-                    prefixIcon: Icons.person_outline,
-                    controller: _usernameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Username tidak boleh kosong';
-                      }
-                      if (value.length < 3) {
-                        return 'Username minimal 3 karakter';
-                      }
-                      return null;
-                    },
-                  ),
-                  
-                  SizedBox(height: 2.h),
-                  
-                  // Email Form
-                  AuthForm(
-                    hintText: 'Email',
-                    prefixIcon: Icons.email_outlined,
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email tidak boleh kosong';
-                      }
-                      if (!value.contains('@')) {
-                        return 'Email tidak valid';
-                      }
-                      return null;
-                    },
-                  ),
-                  
-                  SizedBox(height: 2.h),
-                  
-                  // Password Form
-                  AuthForm(
-                    hintText: 'Password',
-                    prefixIcon: Icons.lock_outline,
-                    controller: _passwordController,
-                    isPassword: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password tidak boleh kosong';
-                      }
-                      if (value.length < 6) {
-                        return 'Password minimal 6 karakter';
-                      }
-                      return null;
-                    },
-                  ),
-                  
-                  SizedBox(height: 2.h),
-                  
-                  // Confirm Password Form
-                  AuthForm(
-                    hintText: 'Konfirmasi Password',
-                    prefixIcon: Icons.lock_outline,
-                    controller: _confirmPasswordController,
-                    isPassword: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Konfirmasi password tidak boleh kosong';
-                      }
-                      if (value != _passwordController.text) {
-                        return 'Password tidak sama';
-                      }
-                      return null;
-                    },
-                  ),
-                  
-                  // SizedBox(height: 2.h),
-                  
-                  // // Terms and Conditions
-                  // RichText(
-                  //   textAlign: TextAlign.center,
-                  //   text: TextSpan(
-                  //     style: TextStyle(
-                  //       fontSize: 12.sp,
-                  //       color: neutralSecondary,
-                  //       fontWeight: FontWeight.w400,
-                  //       height: 1.5,
-                  //     ),
-                  //     children: [
-                  //       const TextSpan(
-                  //         text: 'Dengan membuat akun, saya menyetujui ',
-                  //       ),
-                  //       TextSpan(
-                  //         text: 'Syarat & Ketentuan',
-                  //         style: TextStyle(
-                  //           color: primaryColor600,
-                  //           fontWeight: FontWeight.w600,
-                  //         ),
-                  //         recognizer: TapGestureRecognizer()
-                  //           ..onTap = () {
-                  //             // Navigate to terms
-                  //           },
-                  //       ),
-                  //       const TextSpan(
-                  //         text: ' serta ',
-                  //       ),
-                  //       TextSpan(
-                  //         text: 'Kebijakan Privasi',
-                  //         style: TextStyle(
-                  //           color: primaryColor600,
-                  //           fontWeight: FontWeight.w600,
-                  //         ),
-                  //         recognizer: TapGestureRecognizer()
-                  //           ..onTap = () {
-                  //             // Navigate to privacy policy
-                  //           },
-                  //       ),
-                  //       const TextSpan(
-                  //         text: ' yang berlaku.',
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  
-                  SizedBox(height: 3.h),
-                  
-                  // Register Button
-                  PrimaryButton(
-                    text: 'Register',
-                    function: () {
-                      if (_formKey.currentState!.validate()) {
-                        // Handle register
-                        print('Username: ${_usernameController.text}');
-                        print('Email: ${_emailController.text}');
-                        print('Password: ${_passwordController.text}');
-                      }
-                    },
-                    width: double.infinity,
-                    height: 6.h,
-                    backgroundColor: primaryColor600,
-                    textColor: whiteColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    borderRadius: 12,
-                  ),
-                  
-                  SizedBox(height: 2.h),
-                  
-                  // Login Link
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PrimaryText(
-                        text: 'Sudah mempunyai akun? ',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: neutralSecondary,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          context.goNamed(LoginPage.routeName);
-                        },
-                        child: PrimaryText(
-                          text: 'Login',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor600,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(Constants.imgBgAuth),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 6.w),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                      SizedBox(height: 5.h),
+                      
+                      Center(
+                        child: Image.asset(
+                          Constants.imgRegisterVector,
+                          width: 45.w,
+                          height: 45.w,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.person_add_outlined,
+                              size: 35.w,
+                              color: primaryColor600,
+                            );
+                          },
                         ),
                       ),
+                      
+                      SizedBox(height: 3.5.h),
+                      
+                      // Register Title
+                      PrimaryText(
+                        text: 'Register',
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: neutralDefault,
+                      ),
+                      
+                      SizedBox(height: 1.5.h),
+                      
+                      // Subtitle
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.w),
+                        child: PrimaryText(
+                          text: 'Daftar sekarang dan mulai berpera untuk mencipatakan lingkungan yang lebih sehat.',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: neutralSecondary,
+                          textAlign: TextAlign.center,
+                          lineHeight: 1.5,
+                        ),
+                      ),
+                      
+                      SizedBox(height: 3.5.h),
+                      
+                      // Username Form
+                      AuthForm(
+                        hintText: 'Username',
+                        prefixIcon: Icons.person_outline,
+                        controller: _usernameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Username tidak boleh kosong';
+                          }
+                          if (value.length < 3) {
+                            return 'Username minimal 3 karakter';
+                          }
+                          return null;
+                        },
+                      ),
+                      
+                      SizedBox(height: 2.h),
+                      
+                      // Email Form
+                      AuthForm(
+                        hintText: 'Email',
+                        prefixIcon: Icons.email_outlined,
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Email tidak boleh kosong';
+                          }
+                          if (!value.contains('@')) {
+                            return 'Email tidak valid';
+                          }
+                          return null;
+                        },
+                      ),
+                      
+                      SizedBox(height: 2.h),
+                      
+                      // Password Form
+                      AuthForm(
+                        hintText: 'Password',
+                        prefixIcon: Icons.lock_outline,
+                        controller: _passwordController,
+                        isPassword: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Password tidak boleh kosong';
+                          }
+                          if (value.length < 6) {
+                            return 'Password minimal 6 karakter';
+                          }
+                          return null;
+                        },
+                      ),
+                      
+                      SizedBox(height: 2.h),
+                      
+                      // Confirm Password Form
+                      AuthForm(
+                        hintText: 'Konfirmasi Password',
+                        prefixIcon: Icons.lock_outline,
+                        controller: _confirmPasswordController,
+                        isPassword: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Konfirmasi password tidak boleh kosong';
+                          }
+                          if (value != _passwordController.text) {
+                            return 'Password tidak sama';
+                          }
+                          return null;
+                        },
+                      ),
+                      
+                      // SizedBox(height: 2.h),
+                      
+                      // // Terms and Conditions
+                      // RichText(
+                      //   textAlign: TextAlign.center,
+                      //   text: TextSpan(
+                      //     style: TextStyle(
+                      //       fontSize: 12.sp,
+                      //       color: neutralSecondary,
+                      //       fontWeight: FontWeight.w400,
+                      //       height: 1.5,
+                      //     ),
+                      //     children: [
+                      //       const TextSpan(
+                      //         text: 'Dengan membuat akun, saya menyetujui ',
+                      //       ),
+                      //       TextSpan(
+                      //         text: 'Syarat & Ketentuan',
+                      //         style: TextStyle(
+                      //           color: primaryColor600,
+                      //           fontWeight: FontWeight.w600,
+                      //         ),
+                      //         recognizer: TapGestureRecognizer()
+                      //           ..onTap = () {
+                      //             // Navigate to terms
+                      //           },
+                      //       ),
+                      //       const TextSpan(
+                      //         text: ' serta ',
+                      //       ),
+                      //       TextSpan(
+                      //         text: 'Kebijakan Privasi',
+                      //         style: TextStyle(
+                      //           color: primaryColor600,
+                      //           fontWeight: FontWeight.w600,
+                      //         ),
+                      //         recognizer: TapGestureRecognizer()
+                      //           ..onTap = () {
+                      //             // Navigate to privacy policy
+                      //           },
+                      //       ),
+                      //       const TextSpan(
+                      //         text: ' yang berlaku.',
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      
+                      SizedBox(height: 3.h),
+                      
+                      // Register Button
+                      PrimaryButton(
+                        text: 'Register',
+                        function: () {
+                          if (_formKey.currentState!.validate()) {
+                            // Handle register
+                            print('Username: ${_usernameController.text}');
+                            print('Email: ${_emailController.text}');
+                            print('Password: ${_passwordController.text}');
+                          }
+                        },
+                        width: double.infinity,
+                        height: 6.h,
+                        backgroundColor: primaryColor600,
+                        textColor: whiteColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        borderRadius: 12,
+                      ),
+                      
+                      SizedBox(height: 2.h),
+                      
+                      // Login Link
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PrimaryText(
+                            text: 'Sudah mempunyai akun? ',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: neutralSecondary,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              context.goNamed(LoginPage.routeName);
+                            },
+                            child: PrimaryText(
+                              text: 'Login',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: primaryColor600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 4.h),
                     ],
                   ),
-                  SizedBox(height: 4.h),
-                ],
+                ),
               ),
             ),
           ),
         ),
-      ),
     );
   }
 }
