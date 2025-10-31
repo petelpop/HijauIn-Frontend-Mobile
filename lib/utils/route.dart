@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
+import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/views/onboarding_page.dart';
 import 'package:hijauin_frontend_mobile/features/splash/presentation/views/splash_page.dart';
 
@@ -23,6 +24,12 @@ class AppRoute {
         name: LoginPage.routeName,
         builder: (context, state) {
           return const LoginPage();
-        },)
+        },),
+        GoRoute(
+          path: '/${RegisterPage.routeName}',
+          name: RegisterPage.routeName,
+          builder: (context, state) {
+            return const RegisterPage();
+          },),
   ]);
 }

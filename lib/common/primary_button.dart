@@ -19,7 +19,7 @@ class PrimaryButton extends StatelessWidget {
     required this.text,
     required this.function,
     this.textColor = Colors.white, 
-    this.backgroundColor = const Color(0xFF008F66),
+    this.backgroundColor = const Color(0xFF2D746A),
     this.fontSize = 14,
     this.fontWeight = FontWeight.w400,
     this.width = 100,

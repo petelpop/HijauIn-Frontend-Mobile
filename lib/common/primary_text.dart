@@ -17,7 +17,7 @@ class PrimaryText extends StatelessWidget {
       {super.key,
       required this.text,
       this.fontSize = 14,
-      this.color = const Color(0xFF008F66),
+      this.color = const Color(0xFF2D746A),
       this.fontWeight = FontWeight.w400,
       this.textAlign = null,
       this.letterSpacing = 0,

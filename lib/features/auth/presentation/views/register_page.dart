@@ -1,29 +1,34 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/auth_form.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_button.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
-import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
+import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
 import 'package:sizer/sizer.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String routeName = "login-page";
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  static const String routeName = "register-page";
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
+    _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -40,28 +45,29 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 6.h),
+                  SizedBox(height: 5.h),
                   
                   Center(
                     child: Image.asset(
-                      'assets/images/img_login_vector.png',
-                      width: 50.w,
-                      height: 50.w,
+                      'assets/images/img_register_vector.png',
+                      width: 45.w,
+                      height: 45.w,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return Icon(
-                          Icons.person_outline,
-                          size: 40.w,
+                          Icons.person_add_outlined,
+                          size: 35.w,
                           color: primaryColor600,
                         );
                       },
                     ),
                   ),
                   
-                  SizedBox(height: 4.h),
+                  SizedBox(height: 3.5.h),
                   
+                  // Register Title
                   PrimaryText(
-                    text: 'Login',
+                    text: 'Register',
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     color: neutralDefault,
@@ -69,10 +75,11 @@ class _LoginPageState extends State<LoginPage> {
                   
                   SizedBox(height: 1.5.h),
                   
+                  // Subtitle
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 2.w),
                     child: PrimaryText(
-                      text: 'Masuk untuk melanjutkan langkahmu dalam menjaga kebersihan dan kualitas lingkungan.',
+                      text: 'Daftar sekarang dan mulai berpera untuk mencipatakan lingkungan yang lebih sehat.',
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: neutralSecondary,
@@ -81,7 +88,25 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   
-                  SizedBox(height: 4.h),
+                  SizedBox(height: 3.5.h),
+                  
+                  // Username Form
+                  AuthForm(
+                    hintText: 'Username',
+                    prefixIcon: Icons.person_outline,
+                    controller: _usernameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Username tidak boleh kosong';
+                      }
+                      if (value.length < 3) {
+                        return 'Username minimal 3 karakter';
+                      }
+                      return null;
+                    },
+                  ),
+                  
+                  SizedBox(height: 2.h),
                   
                   // Email Form
                   AuthForm(
@@ -119,32 +144,82 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   
-                  SizedBox(height: 1.5.h),
+                  SizedBox(height: 2.h),
                   
-                  // Lupa Password
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Navigate to forgot password
-                      },
-                      child: PrimaryText(
-                        text: 'Lupa Password?',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: primaryColor600,
-                      ),
-                    ),
+                  // Confirm Password Form
+                  AuthForm(
+                    hintText: 'Konfirmasi Password',
+                    prefixIcon: Icons.lock_outline,
+                    controller: _confirmPasswordController,
+                    isPassword: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Konfirmasi password tidak boleh kosong';
+                      }
+                      if (value != _passwordController.text) {
+                        return 'Password tidak sama';
+                      }
+                      return null;
+                    },
                   ),
+                  
+                  // SizedBox(height: 2.h),
+                  
+                  // // Terms and Conditions
+                  // RichText(
+                  //   textAlign: TextAlign.center,
+                  //   text: TextSpan(
+                  //     style: TextStyle(
+                  //       fontSize: 12.sp,
+                  //       color: neutralSecondary,
+                  //       fontWeight: FontWeight.w400,
+                  //       height: 1.5,
+                  //     ),
+                  //     children: [
+                  //       const TextSpan(
+                  //         text: 'Dengan membuat akun, saya menyetujui ',
+                  //       ),
+                  //       TextSpan(
+                  //         text: 'Syarat & Ketentuan',
+                  //         style: TextStyle(
+                  //           color: primaryColor600,
+                  //           fontWeight: FontWeight.w600,
+                  //         ),
+                  //         recognizer: TapGestureRecognizer()
+                  //           ..onTap = () {
+                  //             // Navigate to terms
+                  //           },
+                  //       ),
+                  //       const TextSpan(
+                  //         text: ' serta ',
+                  //       ),
+                  //       TextSpan(
+                  //         text: 'Kebijakan Privasi',
+                  //         style: TextStyle(
+                  //           color: primaryColor600,
+                  //           fontWeight: FontWeight.w600,
+                  //         ),
+                  //         recognizer: TapGestureRecognizer()
+                  //           ..onTap = () {
+                  //             // Navigate to privacy policy
+                  //           },
+                  //       ),
+                  //       const TextSpan(
+                  //         text: ' yang berlaku.',
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   
                   SizedBox(height: 3.h),
                   
-                  // Login Button
+                  // Register Button
                   PrimaryButton(
-                    text: 'Login',
+                    text: 'Register',
                     function: () {
                       if (_formKey.currentState!.validate()) {
-                        // Handle login
+                        // Handle register
+                        print('Username: ${_usernameController.text}');
                         print('Email: ${_emailController.text}');
                         print('Password: ${_passwordController.text}');
                       }
@@ -160,22 +235,22 @@ class _LoginPageState extends State<LoginPage> {
                   
                   SizedBox(height: 2.h),
                   
-                  // Register Link
+                  // Login Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PrimaryText(
-                        text: 'Belum mempunyai akun? ',
+                        text: 'Sudah mempunyai akun? ',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         color: neutralSecondary,
                       ),
                       GestureDetector(
                         onTap: () {
-                          context.pushNamed(RegisterPage.routeName);
+                          context.goNamed(LoginPage.routeName);
                         },
                         child: PrimaryText(
-                          text: 'Register',
+                          text: 'Login',
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: primaryColor600,
@@ -183,7 +258,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  
                   SizedBox(height: 4.h),
                 ],
               ),
