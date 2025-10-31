@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      context.pushNamed(OnboardingPage.routeName);
+      context.goNamed(OnboardingPage.routeName);
     });
   }
 

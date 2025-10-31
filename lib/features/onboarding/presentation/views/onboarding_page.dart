@@ -75,7 +75,7 @@ class OnboardingView extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              context.pushNamed(LoginPage.routeName);
+                              context.goNamed(LoginPage.routeName);
                             },
                             child: PrimaryText(
                               text: "Lewati",
@@ -120,7 +120,7 @@ class OnboardingView extends StatelessWidget {
                       onPrevious: () => cubit.previousPage(),
                       onNext: () {
                         if (state.isLastPage) {
-                          context.pushNamed(LoginPage.routeName);
+                          context.goNamed(LoginPage.routeName);
                         } else {
                           cubit.nextPage();
                         }
