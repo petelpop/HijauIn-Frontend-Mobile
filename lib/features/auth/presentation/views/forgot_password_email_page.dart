@@ -5,34 +5,29 @@ import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_button.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
-import 'package:hijauin_frontend_mobile/features/auth/presentation/views/forgot_password_email_page.dart';
-import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
 import 'package:sizer/sizer.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String routeName = "login-page";
-  const LoginPage({super.key});
+class ForgotPasswordEmailPage extends StatefulWidget {
+  static const String routeName = "forgot-password-email-page";
+  const ForgotPasswordEmailPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<ForgotPasswordEmailPage> createState() => _ForgotPasswordEmailPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -42,8 +37,8 @@ class _LoginPageState extends State<LoginPage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: SingleChildScrollView(
-          child: SafeArea(
+        child: SafeArea(
+          child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: Form(
@@ -51,40 +46,73 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 6.h),
-
+                    SizedBox(height: 5.h),
+                    
+                    // Back Button
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: GestureDetector(
+                        onTap: () {
+                          context.pop();
+                        },
+                        child: Container(
+                          width: 12.w,
+                          height: 12.w,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: blackColor.withOpacity(0.1),
+                                blurRadius: 10,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: primaryColor600,
+                            size: 18.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    
+                    SizedBox(height: 4.h),
+                    
+                    // Vector Image
                     Center(
                       child: Image.asset(
-                        Constants.imgLoginVector,
-                        width: 50.w,
-                        height: 50.w,
+                        Constants.imgForgotpassVector,
+                        width: 70.w,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
                           return Icon(
-                            Icons.person_outline,
+                            Icons.lock_reset,
                             size: 40.w,
                             color: primaryColor600,
                           );
                         },
                       ),
                     ),
-
+                    
                     SizedBox(height: 4.h),
-
+                    
+                    // Title
                     PrimaryText(
-                      text: 'Login',
+                      text: 'Lupa Password',
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                       color: neutralDefault,
                     ),
-
+                    
                     SizedBox(height: 1.5.h),
-
+                    
+                    // Subtitle
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 2.w),
                       child: PrimaryText(
-                        text:
-                            'Masuk untuk melanjutkan langkahmu dalam menjaga kebersihan dan kualitas lingkungan.',
+                        text: 'Jangan khawatir. Masukkan emailmu, kami akan membantumu.',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         color: neutralSecondary,
@@ -92,9 +120,9 @@ class _LoginPageState extends State<LoginPage> {
                         lineHeight: 1.5,
                       ),
                     ),
-
+                    
                     SizedBox(height: 4.h),
-
+                    
                     // Email Form
                     AuthForm(
                       hintText: 'Email',
@@ -111,54 +139,15 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                     ),
-
-                    SizedBox(height: 2.h),
-
-                    // Password Form
-                    AuthForm(
-                      hintText: 'Password',
-                      prefixIcon: Icons.lock_outline,
-                      controller: _passwordController,
-                      isPassword: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Password tidak boleh kosong';
-                        }
-                        if (value.length < 6) {
-                          return 'Password minimal 6 karakter';
-                        }
-                        return null;
-                      },
-                    ),
-
-                    SizedBox(height: 1.5.h),
-
-                    // Lupa Password
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: () {
-                          context.pushNamed(ForgotPasswordEmailPage.routeName);
-                        },
-                        child: PrimaryText(
-                          text: 'Lupa Password?',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor600,
-                        ),
-                      ),
-                    ),
-
+                    
                     SizedBox(height: 3.h),
-
-                    // Login Button
+                    
+                    // Submit Button
                     PrimaryButton(
-                      text: 'Login',
+                      text: 'Kirim Token',
                       function: () {
                         if (_formKey.currentState!.validate()) {
-                          // Handle login
                           print('Email: ${_emailController.text}');
-                          print('Password: ${_passwordController.text}');
                         }
                       },
                       width: double.infinity,
@@ -169,33 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.w600,
                       borderRadius: 12,
                     ),
-
-                    SizedBox(height: 2.h),
-
-                    // Register Link
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        PrimaryText(
-                          text: 'Belum mempunyai akun? ',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: neutralSecondary,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            context.pushNamed(RegisterPage.routeName);
-                          },
-                          child: PrimaryText(
-                            text: 'Register',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor600,
-                          ),
-                        ),
-                      ],
-                    ),
-
+                    
                     SizedBox(height: 4.h),
                   ],
                 ),

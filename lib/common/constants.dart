@@ -9,4 +9,5 @@ class Constants {
   static const String imgLoginVector = "$imagePath/img_login_vector.png";
   static const String imgRegisterVector = "$imagePath/img_register_vector.png";
   static const String imgBgAuth = "$imagePath/img_bg_auth.png";
+  static const String imgForgotpassVector = "$imagePath/img_forgotpass_vector.png";
 }
