@@ -24,23 +24,28 @@ class ToastWidget {
     Function()? onBuild,
     void Function(FlushbarStatus?)? onStatusChanged,
   }) {
-    if (onBuild != null) {
-      onBuild();
-    }
-    Flushbar(
-      onStatusChanged: onStatusChanged,
-      icon: const Icon(
-        Icons.info_outline,
-        color: Colors.white,
-      ),
-      shouldIconPulse: false,
-      margin: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
-      borderRadius: BorderRadius.circular(8),
-      flushbarPosition: getToastPosition(position),
-      backgroundColor: color,
-      message: message,
-      messageSize: 16,
-      duration: duration,
-    ).show(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!context.mounted) return;
+      
+      if (onBuild != null) {
+        onBuild();
+      }
+      
+      Flushbar(
+        onStatusChanged: onStatusChanged,
+        icon: const Icon(
+          Icons.info_outline,
+          color: Colors.white,
+        ),
+        shouldIconPulse: false,
+        margin: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+        borderRadius: BorderRadius.circular(8),
+        flushbarPosition: getToastPosition(position),
+        backgroundColor: color,
+        message: message,
+        messageSize: 16,
+        duration: duration,
+      ).show(context);
+    });
   }
 }
