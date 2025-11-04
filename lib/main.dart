@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:hijauin_frontend_mobile/utils/route.dart';
 import 'package:sizer/sizer.dart';
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => RegisterCubit())
+        BlocProvider(create: (context) => RegisterCubit()),
+        BlocProvider(create: (context) => LoginCubit()),
       ],
       child: Sizer(
         builder: (context, orientation, screenType) {

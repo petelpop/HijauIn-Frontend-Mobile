@@ -5,4 +5,5 @@ class ApiEndpoint {
 
   // Auth Endpoints
   static String register = '$baseUrl/auth/register';
+  static String login = '$baseUrl/auth/login';
 }

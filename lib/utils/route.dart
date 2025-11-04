@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/forgot_password_email_page.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
+import 'package:hijauin_frontend_mobile/features/home/presentation/views/home_page.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/views/onboarding_page.dart';
 import 'package:hijauin_frontend_mobile/features/splash/presentation/views/splash_page.dart';
 
@@ -41,5 +42,11 @@ class AppRoute {
         return const ForgotPasswordEmailPage();
       },
     ),
+    GoRoute(
+      path: '/${HomePage.routeName}',
+      name: HomePage.routeName,
+      builder: (context, state) {
+        return const HomePage();
+      },)
   ]);
 }

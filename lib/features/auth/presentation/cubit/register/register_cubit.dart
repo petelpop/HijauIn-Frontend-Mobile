@@ -6,22 +6,20 @@ import 'package:hijauin_frontend_mobile/features/auth/data/services/services.dar
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit({AuthServices? authServices})
-      : _authServices = authServices ?? AuthServices(),
-        super(RegisterInitial());
+  RegisterCubit() : super(RegisterInitial());
+  
+  AuthServices authServices = AuthServices();
 
-  final AuthServices _authServices;
-
-  Future<void> register(RegisterData payload) async {
+  void register(RegisterData payload) async {
     emit(RegisterLoading());
-    final result = await _authServices.register(payload);
+    final result = await authServices.register(payload);
 
     result.fold(
       (failure) {
         emit(RegisterFailed(message: failure.message));
         print("error: ${failure.message}");
       },
-      (_) => emit(const RegisterSuccess( message: 'Registrasi berhasil')),
+      (_) => emit(const RegisterSuccess(message: 'Registrasi berhasil')),
     );
   }
 }

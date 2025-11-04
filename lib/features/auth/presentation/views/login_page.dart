@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/auth_form.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_button.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
+import 'package:hijauin_frontend_mobile/features/auth/data/models/login_request.dart';
+import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/forgot_password_email_page.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
+import 'package:hijauin_frontend_mobile/features/home/presentation/views/home_page.dart';
+import 'package:hijauin_frontend_mobile/utils/toast_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,9 +36,34 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      body: Container(
+    return BlocListener<LoginCubit, LoginState>(
+      listener: (context, state) {
+
+        if (state is LoginSuccess) {
+          ToastWidget.showToast(
+            context,
+            message: state.loginData.message,
+            color: primaryColor600,
+          );
+
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (!context.mounted) return;
+            context.goNamed(HomePage.routeName);
+          });
+
+        }
+        
+        if (state is LoginFailed) {
+          ToastWidget.showToast(
+            context,
+            message: state.message,
+            color: redColor,
+          );
+        }
+      },
+      child: Scaffold(
+        backgroundColor: whiteColor,
+        body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
@@ -152,22 +182,33 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 3.h),
 
                     // Login Button
-                    PrimaryButton(
-                      text: 'Login',
-                      function: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Handle login
-                          print('Email: ${_emailController.text}');
-                          print('Password: ${_passwordController.text}');
-                        }
+                    BlocBuilder<LoginCubit, LoginState>(
+                      builder: (context, state) {
+                        final isLoading = state is LoginLoading;
+                        
+                        return PrimaryButton(
+                          text: isLoading ? 'Loading...' : 'Login',
+                          function: isLoading
+                              ? () {} 
+                              : () {
+                                  if (_formKey.currentState!.validate()) {
+                                    final payload = LoginRequest(
+                                      emailOrUsername: _emailController.text,
+                                      password: _passwordController.text,
+                                    );
+
+                                    context.read<LoginCubit>().login(payload);
+                                  }
+                                },
+                          width: double.infinity,
+                          height: 6.h,
+                          backgroundColor: isLoading ? neutralSecondary : primaryColor600,
+                          textColor: whiteColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          borderRadius: 12,
+                        );
                       },
-                      width: double.infinity,
-                      height: 6.h,
-                      backgroundColor: primaryColor600,
-                      textColor: whiteColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      borderRadius: 12,
                     ),
 
                     SizedBox(height: 2.h),
@@ -204,6 +245,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
+      ), 
+    ); 
   }
 }
