@@ -9,7 +9,7 @@ import 'package:hijauin_frontend_mobile/utils/exception.dart';
 class AuthServices {
   final _dio = DioClient();
 
-  FutureEither<void> register(Register payload) async {
+  FutureEither<void> register(RegisterData payload) async {
     try {
       final response = await _dio.post(ApiEndpoint.register, body: payload.toJson());
 

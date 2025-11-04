@@ -246,7 +246,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       text: 'Register',
                       function: () {
                         if (_formKey.currentState!.validate()) {
-                          final payload = register_model.Register(
+                          final payload = register_model.RegisterData(
                             namaPanggilan: _usernameController.text,
                             username: _usernameController.text,
                             email: _emailController.text,

@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-class Register {
+class RegisterData {
     final String namaPanggilan;
     final String username;
     final String email;
     final String password;
     final String confirmPassword;
 
-    Register({
+    RegisterData({
         required this.namaPanggilan,
         required this.username,
         required this.email,
@@ -15,14 +15,13 @@ class Register {
         required this.confirmPassword,
     });
 
-    Register copyWith({
+    RegisterData copyWith({
         String? namaPanggilan,
         String? username,
         String? email,
         String? password,
         String? confirmPassword,
-    }) => 
-        Register(
+    }) => RegisterData(
             namaPanggilan: namaPanggilan ?? this.namaPanggilan,
             username: username ?? this.username,
             email: email ?? this.email,
@@ -30,11 +29,11 @@ class Register {
             confirmPassword: confirmPassword ?? this.confirmPassword,
         );
 
-    factory Register.fromRawJson(String str) => Register.fromJson(json.decode(str));
+    factory RegisterData.fromRawJson(String str) => RegisterData.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory Register.fromJson(Map<String, dynamic> json) => Register(
+    factory RegisterData.fromJson(Map<String, dynamic> json) => RegisterData(
         namaPanggilan: json["nama_panggilan"],
         username: json["username"],
         email: json["email"],

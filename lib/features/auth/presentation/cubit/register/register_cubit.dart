@@ -12,7 +12,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   final AuthServices _authServices;
 
-  Future<void> register(Register payload) async {
+  Future<void> register(RegisterData payload) async {
     emit(RegisterLoading());
     final result = await _authServices.register(payload);
 
