@@ -8,7 +8,7 @@ import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/register/register_cubit.dart';
-import 'package:hijauin_frontend_mobile/features/auth/data/models/register.dart' as register_model;
+import 'package:hijauin_frontend_mobile/features/auth/data/models/register_request.dart' as register_model;
 import 'package:hijauin_frontend_mobile/utils/toast_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -246,7 +246,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       text: 'Register',
                       function: () {
                         if (_formKey.currentState!.validate()) {
-                          final payload = register_model.RegisterData(
+                          final payload = register_model.RegisterRequest(
                             namaPanggilan: _usernameController.text,
                             username: _usernameController.text,
                             email: _emailController.text,

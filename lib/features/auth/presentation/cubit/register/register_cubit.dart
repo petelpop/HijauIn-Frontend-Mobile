@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hijauin_frontend_mobile/features/auth/data/models/register.dart';
+import 'package:hijauin_frontend_mobile/features/auth/data/models/register_request.dart';
 import 'package:hijauin_frontend_mobile/features/auth/data/services/services.dart';
 
 part 'register_state.dart';
@@ -10,7 +10,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   
   AuthServices authServices = AuthServices();
 
-  void register(RegisterData payload) async {
+  void register(RegisterRequest payload) async {
     emit(RegisterLoading());
     final result = await authServices.register(payload);
 

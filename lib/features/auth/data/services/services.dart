@@ -4,14 +4,14 @@ import 'package:hijauin_frontend_mobile/endpoint/endpoints.dart';
 import 'package:hijauin_frontend_mobile/endpoint/type_defs.dart';
 import 'package:hijauin_frontend_mobile/features/auth/data/models/login.dart';
 import 'package:hijauin_frontend_mobile/features/auth/data/models/login_request.dart';
-import 'package:hijauin_frontend_mobile/features/auth/data/models/register.dart';
+import 'package:hijauin_frontend_mobile/features/auth/data/models/register_request.dart';
 import 'package:hijauin_frontend_mobile/utils/dio_client.dart';
 import 'package:hijauin_frontend_mobile/utils/exception.dart';
 
 class AuthServices {
   final _dio = DioClient();
 
-  FutureEither<void> register(RegisterData payload) async {
+  FutureEither<void> register(RegisterRequest payload) async {
     try {
       final response = await _dio.post(ApiEndpoint.register, body: payload.toJson());
 
