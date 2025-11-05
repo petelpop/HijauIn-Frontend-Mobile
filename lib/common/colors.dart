@@ -16,7 +16,7 @@ Color primaryColor100 = const Color(0xFFD7F0EA);
 Color primaryColor200 = const Color(0xFFA4E0D3);
 Color primaryColor300 = const Color(0xFF97C0B9);
 Color primaryColor400 = const Color(0xFF5A4C4C);
-Color primaryColor50 = const Color(0xFFF3FAF8);
+Color primaryColor50 = const Color(0xFF3FAF4B);
 Color primaryColor500 = const Color(0xFF3B9184);
 Color primaryColor600 = const Color(0xFF2D746A);
 Color primaryColor700 = const Color(0xFF2D5E50);
@@ -36,6 +36,27 @@ Color secondaryColor700 = const Color(0xFF1F7548);
 Color secondaryColor800 = const Color(0xFF1D5EAF);
 Color secondaryColor900 = const Color(0xFF1A4D35);
 Color secondaryColor950 = const Color(0xFF0D2A1C);
+
+// text colors
+Color colorTextDanger = const Color(0xFFDE5519);
+Color colorTextDangerPressed = const Color(0xFF922351A);
+Color colorTextDarkPrimary = const Color(0xFF111827);
+Color colorTextDarkSecondary = const Color(0xFF4B5563);
+Color colorTextDarkTertiary = const Color(0xFF6B7280);
+Color colorTextDisabled = const Color(0xFF6B7280);
+Color colorTextInfo = const Color(0xFF0CB2EB);
+Color colorTextInfoPressed = const Color(0xFF0172A3);
+Color colorTextLightPrimary = const Color(0xFFFFFFFF);
+Color colorTextLightSecondary = const Color(0xFFD1D5DB);
+Color colorTextPrimary = const Color(0xFF2D746A);
+Color colorTextPrimaryPressed = const Color(0xFF234C47);
+Color colorTextSecondary = const Color(0xFF31B675);
+Color colorTextSecondaryPressed = const Color(0xFF1F764B);
+Color colorTextSuccess = const Color(0xFF4BAA17);
+Color colorTextSuccessPressed = const Color(0xFF357615);
+Color colorTextWarning = const Color(0xFFFCB400);
+Color colorTextWarningPressed = const Color(0xFFE28B00);
+
 
 Color moderatColor50 = const Color(0xFFFFFFF0);
 Color moderatColor100 = const Color(0xFFFDFFC1);
