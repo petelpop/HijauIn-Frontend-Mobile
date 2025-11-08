@@ -10,7 +10,7 @@ import 'package:hijauin_frontend_mobile/features/auth/data/models/login_request.
 import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/forgot_password_email_page.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
-import 'package:hijauin_frontend_mobile/features/home/presentation/views/home_page.dart';
+import 'package:hijauin_frontend_mobile/features/main/presentation/views/main_page.dart';
 import 'package:hijauin_frontend_mobile/utils/toast_widget.dart';
 import 'package:sizer/sizer.dart';
 
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
 
           Future.delayed(const Duration(milliseconds: 500), () {
             if (!context.mounted) return;
-            context.goNamed(HomePage.routeName);
+            context.goNamed(MainPage.routeName);
           });
 
         }
