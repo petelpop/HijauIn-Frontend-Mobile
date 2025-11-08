@@ -21,7 +21,9 @@ class BottomNavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
       decoration: BoxDecoration(
         color: isSelected ? primaryColor600 : Colors.transparent,
@@ -30,21 +32,34 @@ class BottomNavBarItem extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(
-            isSelected ? imageSelected : imageUnselect,
-            width: 24,
-            height: 24,
-            color: isSelected ? Colors.white : colorTextDarkSecondary,
-          ),
-          if (isSelected) ...[
-            SizedBox(width: 2.w),
-            PrimaryText(
-              text: title,
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+          AnimatedScale(
+            scale: isSelected ? 1.1 : 1.0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Image.asset(
+              isSelected ? imageSelected : imageUnselect,
+              width: 24,
+              height: 24,
+              color: isSelected ? Colors.white : colorTextDarkSecondary,
             ),
-          ],
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: isSelected
+                ? Row(
+                    children: [
+                      SizedBox(width: 2.w),
+                      PrimaryText(
+                        text: title,
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+          ),
         ],
       ),
     );
