@@ -68,7 +68,10 @@ class HomePage extends StatelessWidget {
                             fontSize: 14,
                           ),
                           SizedBox(height: 32),
-                          AqiHomeWidget(),
+                          AqiHomeWidget(
+                            city: "Tembalang",
+                            aqi: "351",
+                          ),
                           SizedBox(height: 20),
                           Row(
                             children: [
