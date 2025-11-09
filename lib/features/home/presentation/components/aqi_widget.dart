@@ -1,19 +1,29 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 
 class AqiWidget extends StatelessWidget {
-  const AqiWidget({super.key});
+  String? aqi;
+  Color? colorAqi;
+  Color? colorBorderAqi;
+
+  AqiWidget({
+    super.key,
+    this.aqi,
+    this.colorAqi,
+    this.colorBorderAqi});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: Color(0xFF5CC220),
+        color: colorAqi ?? Color(0xFF9FEA6C),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Color(0xFF9FEA6C),
+          color: colorBorderAqi ?? Color(0xFF9FEA6C),
           strokeAlign: BorderSide.strokeAlignInside,
           width: 5
         )
@@ -23,7 +33,7 @@ class AqiWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PrimaryText(
-            text: "20",
+            text: aqi ?? "...",
             fontSize: 26,
             letterSpacing: -0.1,
             color: whiteColor,

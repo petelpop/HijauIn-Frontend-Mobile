@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/components/aqi_home_widget.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/components/item_home_widget.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/components/item_warta_home.dart';
+import 'package:hijauin_frontend_mobile/features/home/presentation/cubit/homepage_cubit.dart';
+import 'package:hijauin_frontend_mobile/features/main/cubit/main_page_cubit.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePage extends StatelessWidget {
@@ -89,8 +92,13 @@ class HomePage extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Image.asset(
-                        Constants.imgBgChatbotBanner
+                      child: GestureDetector(
+                        onTap: (){
+                        context.read<MainPageCubit>().setPage(3);
+                        },
+                        child: Image.asset(
+                          Constants.imgBgChatbotBanner
+                        ),
                       ),
                     ),
                   ],
