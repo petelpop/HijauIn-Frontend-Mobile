@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/forgot/forgot_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/register/register_cubit.dart';
+import 'package:hijauin_frontend_mobile/features/home/presentation/cubit/aqi_home/aqi_widget_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/main/cubit/main_page_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin_cubit.dart';
 import 'package:hijauin_frontend_mobile/utils/route.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ForgotCubit()),
         BlocProvider(create: (context) => MainPageCubit()),
         BlocProvider(create: (context) => MapinCubit()),
+        BlocProvider(create: (context) => AqiWidgetCubit()),
       ],
       child: Sizer(
         builder: (context, orientation, screenType) {
