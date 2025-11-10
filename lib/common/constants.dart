@@ -9,6 +9,13 @@ class Constants {
   static const String icSortirBlack = "$iconsPath/ic_sortir_black.png";
   static const String icMapinBlack = "$iconsPath/ic_mapin_black.png";
 
+  // sortir
+  static const String icCameraSortir = "$iconsPath/ic_camera_sortir.png";
+  static const String icPhotoSortir = "$iconsPath/ic_photo_sortir.png";
+
+  // askflo
+  static const String icChatbotAskflo = "$iconsPath/ic_chatbot_askflo.png";
+
   // navbar
   static const String icAskfloActive = "$iconsPath/ic_askflo_active.png";
   static const String icAskfloInactive = "$iconsPath/ic_askflo_inactive.png";
@@ -35,4 +42,11 @@ class Constants {
   // home
   static const String imgBgHome = "$imagePath/img_bg_home.png";
   static const String imgTrashItemWarta = "$imagePath/img_trash_item_warta.png";
+
+  // sortir
+  static const String imgBgSortir = "$imagePath/img_bg_sortir.png";
+
+  // askflo
+  static const String imgBgAskflo = "$imagePath/img_bg_askflo.png";
+
 }
