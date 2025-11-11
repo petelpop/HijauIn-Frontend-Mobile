@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
-import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin_cubit.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin/mapin_cubit.dart';
 import 'package:sizer/sizer.dart';
 
 class ModeSelector extends StatelessWidget {

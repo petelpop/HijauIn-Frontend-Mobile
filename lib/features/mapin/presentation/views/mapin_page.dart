@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:hijauin_frontend_mobile/common/colors.dart';
-import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/data/models/location_model.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/data/models/waste_location_model.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/air_quality_bottom_sheet.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/mode_selector.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/trash_location_bottom_sheet.dart';
-import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin_cubit.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/trash_markers_builder.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin/mapin_cubit.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/waste/waste_cubit.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sizer/sizer.dart';
 
@@ -22,31 +23,10 @@ class MapinPage extends StatefulWidget {
 class _MapinPageState extends State<MapinPage> {
   final MapController _mapController = MapController();
   
-  // Dummy data tempat sampah
-  final List<TrashLocation> _trashLocations = [
-    TrashLocation(
-      id: '1',
-      name: 'Tempat Sampah Taman Inspirasi',
-      latitude: -6.2088,
-      longitude: 106.8456,
-      description: 'Di depan gazebo hutan budaya',
-      imageUrl: Constants.imgBgAuth,
-      types: ['Organik', 'Anorganik', 'B3'],
-      distance: 1210,
-    ),
-    TrashLocation(
-      id: '2',
-      name: 'Bank Sampah Kampung',
-      latitude: -6.2100,
-      longitude: 106.8470,
-      description: 'Dekat masjid',
-      imageUrl: Constants.imgBgAuth,
-      types: ['Organik', 'Anorganik'],
-      distance: 850,
-    ),
-  ];
-
-  // Dummy data kualitas udara
+  double _userLatitude = -7.048506770073256;
+  double _userLongitude = 110.44122458341415;
+  
+  // TODO: Dummy data kualitas udara
   final List<AirQualityLocation> _airQualityLocations = [
     AirQualityLocation(
       id: '1',
@@ -77,13 +57,74 @@ class _MapinPageState extends State<MapinPage> {
     ),
   ];
 
-  TrashLocation? _selectedTrashLocation;
+  WasteLocationDataModel? _selectedTrashLocation;
   AirQualityLocation? _selectedAirLocation;
 
   @override
   void initState() {
     super.initState();
     context.read<MapinCubit>().setMode(MapMode.tempatSampah);
+    _getUserLocationAndFetchWaste();
+  }
+
+  Future<void> _getUserLocationAndFetchWaste() async {
+        // TODO: lokasi masih menggunakan lokasi FSM
+    /*
+    try {
+      Position? position = await _locationService.getCurrentLocation();
+      
+      if (position != null) {
+        setState(() {
+          _userLatitude = position.latitude;
+          _userLongitude = position.longitude;
+        });
+        
+        _mapController.move(
+          LatLng(position.latitude, position.longitude),
+          14.0,
+        );
+        
+        context.read<WasteCubit>().fetchWasteLocations(
+          position.latitude,
+          position.longitude,
+        );
+      } else {
+        Position? lastPosition = await _locationService.getLastKnownPosition();
+        
+        if (lastPosition != null) {
+          setState(() {
+            _userLatitude = lastPosition.latitude;
+            _userLongitude = lastPosition.longitude;
+          });
+          
+          _mapController.move(
+            LatLng(lastPosition.latitude, lastPosition.longitude),
+            14.0,
+          );
+          
+          context.read<WasteCubit>().fetchWasteLocations(
+            lastPosition.latitude,
+            lastPosition.longitude,
+          );
+        } else {
+          context.read<WasteCubit>().fetchWasteLocations(
+            _userLatitude,
+            _userLongitude,
+          );
+        }
+      }
+    } catch (e) {
+      context.read<WasteCubit>().fetchWasteLocations(
+        _userLatitude,
+        _userLongitude,
+      );
+    }
+    */
+    
+    context.read<WasteCubit>().fetchWasteLocations(
+      _userLatitude,
+      _userLongitude,
+    );
   }
 
   @override
@@ -98,11 +139,10 @@ class _MapinPageState extends State<MapinPage> {
         return Scaffold(
           body: Stack(
             children: [
-              // Map
               FlutterMap(
                 mapController: _mapController,
                 options: MapOptions(
-                  initialCenter: LatLng(-6.2088, 106.8456),
+                  initialCenter: LatLng(_userLatitude, _userLongitude),
                   initialZoom: 14.0,
                   minZoom: 10.0,
                   maxZoom: 18.0,
@@ -112,11 +152,27 @@ class _MapinPageState extends State<MapinPage> {
                     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.hijauin.app',
                   ),
-                  MarkerLayer(
-                    markers: currentMode == MapMode.tempatSampah
-                        ? _buildTrashMarkers()
-                        : _buildAirQualityMarkers(),
-                  ),
+                  if (currentMode == MapMode.tempatSampah)
+                    BlocBuilder<WasteCubit, WasteState>(
+                      builder: (context, wasteState) {
+                        if (wasteState is WasteLoaded) {
+                          return MarkerLayer(
+                            markers: TrashMarkersBuilder.buildMarkers(
+                              locations: wasteState.wasteLocation.data,
+                              onMarkerTap: (location) {
+                                setState(() {
+                                  _selectedTrashLocation = location;
+                                  _selectedAirLocation = null;
+                                });
+                              },
+                            ),
+                          );
+                        }
+                        return MarkerLayer(markers: []);
+                      },
+                    )
+                  else
+                    MarkerLayer(markers: _buildAirQualityMarkers()),
                 ],
               ),
 
@@ -136,10 +192,11 @@ class _MapinPageState extends State<MapinPage> {
                 ),
               ),
 
-              // Bottom Sheet for selected location
               if (_selectedTrashLocation != null)
                 TrashLocationBottomSheet(
                   location: _selectedTrashLocation!,
+                  userLatitude: _userLatitude,
+                  userLongitude: _userLongitude,
                   onClose: () {
                     setState(() {
                       _selectedTrashLocation = null;
@@ -162,36 +219,13 @@ class _MapinPageState extends State<MapinPage> {
     );
   }
 
-  List<Marker> _buildTrashMarkers() {
-    return _trashLocations.map((location) {
-      return Marker(
-        point: LatLng(location.latitude, location.longitude),
-        width: 40,
-        height: 40,
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedTrashLocation = location;
-              _selectedAirLocation = null;
-            });
-          },
-          child: Icon(
-            Icons.location_on,
-            size: 40,
-            color: primaryColor600,
-          ),
-        ),
-      );
-    }).toList();
-  }
-
   List<Marker> _buildAirQualityMarkers() {
     return _airQualityLocations.map((location) {
       Color markerColor = location.aqiValue <= 50
-          ? Color(0xFF10B981) // Green - Baik
+          ? Color(0xFF10B981) 
           : location.aqiValue <= 100
-              ? Color(0xFFFBBF24) // Yellow - Sedang
-              : Color(0xFFEF4444); // Red - Tidak Sehat
+              ? Color(0xFFFBBF24) 
+              : Color(0xFFEF4444); 
 
       return Marker(
         point: LatLng(location.latitude, location.longitude),

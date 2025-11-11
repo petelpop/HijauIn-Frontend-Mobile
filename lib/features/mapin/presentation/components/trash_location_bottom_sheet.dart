@@ -2,21 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
-import 'package:hijauin_frontend_mobile/features/mapin/data/models/location_model.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/data/models/waste_location_model.dart';
+import 'package:hijauin_frontend_mobile/utils/distance_calculator.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TrashLocationBottomSheet extends StatelessWidget {
-  final TrashLocation location;
+  final WasteLocationDataModel location;
   final VoidCallback onClose;
+  final double userLatitude;
+  final double userLongitude;
 
   const TrashLocationBottomSheet({
     super.key,
     required this.location,
     required this.onClose,
+    required this.userLatitude,
+    required this.userLongitude,
   });
+
+  Future<void> _openGoogleMaps() async {
+    final lat = location.coordinates.latitude;
+    final lng = location.coordinates.longitude;
+    
+    final url = Uri.parse(
+      'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng&travelmode=driving'
+    );
+    
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch Google Maps';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final distance = DistanceCalculator.calculateDistance(
+      userLatitude,
+      userLongitude,
+      location.coordinates.latitude,
+      location.coordinates.longitude,
+    );
+
+    final displayCategories = location.categories.isEmpty
+        ? ['Organik', 'Anorganik', 'B3']
+        : location.categories;
+
     return Positioned(
       bottom: 10.h,
       left: 0,
@@ -61,11 +93,23 @@ class TrashLocationBottomSheet extends StatelessWidget {
                   Icon(Icons.location_on, color: primaryColor600, size: 20),
                   SizedBox(width: 2.w),
                   Expanded(
-                    child: PrimaryText(
-                      text: location.description,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: colorTextDarkPrimary,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PrimaryText(
+                          text: location.name,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: colorTextDarkPrimary,
+                        ),
+                        if (location.address.isNotEmpty)
+                          PrimaryText(
+                            text: location.address,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: colorTextDarkSecondary,
+                          ),
+                      ],
                     ),
                   ),
                 ],
@@ -74,26 +118,39 @@ class TrashLocationBottomSheet extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      location.imageUrl ?? Constants.imgBgAuth,
-                      height: 100,
-                      width: 140,
-                      fit: BoxFit.cover,
-                    ),
+                    child: location.imageUrl.isNotEmpty
+                        ? Image.network(
+                            location.imageUrl,
+                            height: 100,
+                            width: 140,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                Constants.imgBgAuth,
+                                height: 100,
+                                width: 140,
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          )
+                        : Image.asset(
+                            Constants.imgBgAuth,
+                            height: 100,
+                            width: 140,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   SizedBox(width: 3.w),
-                  // Types badges
                   Expanded(
                     child: Wrap(
                       spacing: 2.w,
                       runSpacing: 1.h,
-                      children: location.types.map((type) {
-                        Color typeColor = type == 'Organik'
+                      children: displayCategories.map((type) {
+                        Color typeColor = type.toLowerCase() == 'organik'
                             ? Color(0xFF10B981)
-                            : type == 'Anorganik'
+                            : type.toLowerCase() == 'anorganik'
                                 ? Color(0xFFFBBF24)
                                 : Color(0xFFEF4444);
                         return Container(
@@ -123,7 +180,7 @@ class TrashLocationBottomSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PrimaryText(
-                        text: '${location.distance} m',
+                        text: DistanceCalculator.formatDistance(distance),
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         color: colorTextDarkPrimary,
@@ -137,9 +194,7 @@ class TrashLocationBottomSheet extends StatelessWidget {
                     ],
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // TODO: Open Google Maps
-                    },
+                    onPressed: _openGoogleMaps,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor600,
                       padding:
@@ -164,3 +219,4 @@ class TrashLocationBottomSheet extends StatelessWidget {
     );
   }
 }
+
