@@ -148,13 +148,36 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                           SizedBox(height: 20),
-                          Row(
-                            children: [
-                              Expanded(flex: 1, child: ItemHomeWidget()),
-                              SizedBox(width: 20),
-                              Expanded(flex: 1, child: ItemHomeWidget())
-                            ],
-                          )
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: ItemHomeWidget(
+                                    iconPath: Constants.icSortirBlack,
+                                    title: "Sortir",
+                                    description: "Klasifikasikan jenis sampah",
+                                    onTap: () {
+                                      context.read<MainPageCubit>().setPage(1);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(width: 20),
+                                Expanded(
+                                  flex: 1,
+                                  child: ItemHomeWidget(
+                                    iconPath: Constants.icMapinBlack,
+                                    title: "MapIn",
+                                    description: "Cari tempat sampah",
+                                    onTap: () {
+                                      context.read<MainPageCubit>().setPage(2);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
