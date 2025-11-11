@@ -12,4 +12,8 @@ class ApiEndpoint {
 
   // Home Endpoints
   static String aqiHomeWidget(lat, long) => '$aqiBaseUrl/feed/geo:$lat;$long/?token=$aqiToken';
+
+  // Mapin Endpoints
+  static String wasteLocationsNearby(lat, long) => '$baseUrl/loka/nearby?lat=$lat&lng=$long&radius=1500';
+  static String wasteLocationsNearbyWithCategory(lat, long,categories) => '$baseUrl/loka/nearby?lat=$lat&lng=$long&radius=1500&categories=$categories';
 }
