@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
+import 'package:hijauin_frontend_mobile/features/main/presentation/views/main_page.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/views/onboarding_page.dart';
+import 'package:hijauin_frontend_mobile/utils/shared_storage.dart';
 import 'package:sizer/sizer.dart';
 
 class SplashPage extends StatefulWidget {
@@ -19,12 +21,22 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _checkAuthAndNavigate();
+  }
 
-    Future.delayed(const Duration(seconds: 2), () {
+  Future<void> _checkAuthAndNavigate() async {
+    await Future.delayed(const Duration(seconds: 2));
+    
+    final isLoggedIn = await SharedStorage.isLoggedIn();
+    
+    if (!mounted) return;
+    
+    if (isLoggedIn) {
+      context.goNamed(MainPage.routeName);
+    } else {
       context.goNamed(OnboardingPage.routeName);
-    });
+    }
   }
 
   @override

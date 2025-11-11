@@ -11,6 +11,7 @@ import 'package:hijauin_frontend_mobile/features/home/presentation/components/it
 import 'package:hijauin_frontend_mobile/features/home/presentation/cubit/aqi_home/aqi_widget_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/main/cubit/main_page_cubit.dart';
 import 'package:hijauin_frontend_mobile/utils/location_service.dart';
+import 'package:hijauin_frontend_mobile/utils/shared_storage.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "home-page";
@@ -22,11 +23,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final LocationService _locationService = LocationService();
+  String userName = "User";
 
   @override
   void initState() {
     super.initState();
+    _loadUserData();
     _fetchAqiWithUserLocation();
+  }
+
+  Future<void> _loadUserData() async {
+    final userData = await SharedStorage.getUserData();
+    if (userData != null) {
+      setState(() {
+        userName = userData.namaPanggilan;
+      });
+    }
   }
 
   Future<void> _fetchAqiWithUserLocation() async {
@@ -101,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           PrimaryText(
-                            text: "Hi, Hani 👋",
+                            text: "Hi, $userName 👋",
                             fontWeight: FontWeight.w600,
                             color: colorTextDarkPrimary,
                             fontSize: 18,
