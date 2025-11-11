@@ -20,10 +20,33 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginFailed(message: failure.message));
         print("Login error: ${failure.message}");
       },
-      (loginData) {
+      (loginData) async {
         emit(LoginSuccess(loginData: loginData));
         print("Login success: ${loginData.message}");
       },
     );
+  }
+
+  Future<void> checkLoginStatus() async {
+    final isLoggedIn = await authServices.isLoggedIn();
+    if (isLoggedIn) {
+      final userData = await authServices.getCurrentUser();
+      final token = await authServices.getAccessToken();
+      
+      if (userData != null && token != null) {
+        final loginData = LoginData(
+          message: 'Auto login',
+          accessToken: token,
+          user: userData,
+        );
+        emit(LoginSuccess(loginData: loginData));
+      }
+    }
+  }
+
+  Future<void> logout() async {
+    await authServices.logout();
+    emit(LoginInitial());
+    print("User logged out and data cleared");
   }
 }

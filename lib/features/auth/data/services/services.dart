@@ -8,6 +8,7 @@ import 'package:hijauin_frontend_mobile/features/auth/data/models/login_request.
 import 'package:hijauin_frontend_mobile/features/auth/data/models/register_request.dart';
 import 'package:hijauin_frontend_mobile/utils/dio_client.dart';
 import 'package:hijauin_frontend_mobile/utils/exception.dart';
+import 'package:hijauin_frontend_mobile/utils/shared_storage.dart';
 
 class AuthServices {
   final _dio = DioClient();
@@ -46,6 +47,9 @@ class AuthServices {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final loginData = LoginData.fromJson(response.data);
+        
+        await SharedStorage.saveLoginData(loginData);
+        
         return right(loginData);
       }
 
@@ -67,6 +71,22 @@ class AuthServices {
     } catch (e) {
       return left(ApiException(message: e.toString()));
     }
+  }
+
+  Future<void> logout() async {
+    await SharedStorage.clearAuthData();
+  }
+
+  Future<bool> isLoggedIn() async {
+    return await SharedStorage.isLoggedIn();
+  }
+
+  Future<UserData?> getCurrentUser() async {
+    return await SharedStorage.getUserData();
+  }
+
+  Future<String?> getAccessToken() async {
+    return await SharedStorage.getAccessToken();
   }
 
   FutureEither<String> forgotPassword(ForgotRequest payload) async {
