@@ -46,6 +46,7 @@ dependencies:
 
   # Environment
   flutter_dotenv: ^6.0.0
+  shared_preferences: ^2.3.3
 
   # Routing
   go_router: ^15.1.2
