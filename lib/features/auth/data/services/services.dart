@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hijauin_frontend_mobile/endpoint/endpoints.dart';
 import 'package:hijauin_frontend_mobile/endpoint/type_defs.dart';
+import 'package:hijauin_frontend_mobile/features/auth/data/models/forgot_request.dart';
 import 'package:hijauin_frontend_mobile/features/auth/data/models/login.dart';
 import 'package:hijauin_frontend_mobile/features/auth/data/models/login_request.dart';
 import 'package:hijauin_frontend_mobile/features/auth/data/models/register_request.dart';
@@ -51,6 +52,37 @@ class AuthServices {
       final message = response.data is Map && response.data['message'] != null
           ? response.data['message'].toString()
           : 'Login failed';
+
+      return left(ApiException(message: message, responseCode: true));
+    } on DioError catch (e) {
+      String message = e.message ?? e.toString();
+      if (e.response != null && e.response?.data != null) {
+        try {
+          if (e.response?.data is Map && e.response?.data['message'] != null) {
+            message = e.response?.data['message'].toString() ?? message;
+          }
+        } catch (_) {}
+      }
+      return left(ApiException(message: message));
+    } catch (e) {
+      return left(ApiException(message: e.toString()));
+    }
+  }
+
+  FutureEither<String> forgotPassword(ForgotRequest payload) async {
+    try {
+      final response = await _dio.post(ApiEndpoint.forgotPassword, body: payload.toJson());
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final message = response.data is Map && response.data['message'] != null
+            ? response.data['message'].toString()
+            : 'Email reset password berhasil dikirim';
+        return right(message);
+      }
+
+      final message = response.data is Map && response.data['message'] != null
+          ? response.data['message'].toString()
+          : 'Forgot password failed';
 
       return left(ApiException(message: message, responseCode: true));
     } on DioError catch (e) {

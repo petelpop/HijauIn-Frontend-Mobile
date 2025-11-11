@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/auth_form.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_button.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
+import 'package:hijauin_frontend_mobile/features/auth/data/models/forgot_request.dart';
+import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/forgot/forgot_cubit.dart';
+import 'package:hijauin_frontend_mobile/utils/toast_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class ForgotPasswordEmailPage extends StatefulWidget {
@@ -27,8 +31,35 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return BlocListener<ForgotCubit, ForgotState>(
+      listener: (context, state) {
+
+        if (state is ForgotSuccess) {
+          ToastWidget.showToast(
+            context,
+            message: state.message,
+            color: primaryColor600,
+            duration: const Duration(seconds: 5), 
+          );
+
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (!context.mounted) return;
+            context.pop();
+          });
+        } 
+        
+        if (state is ForgotFailed) {
+          ToastWidget.showToast(
+            context,
+            message: state.message,
+            color: redColor,
+            duration: const Duration(seconds: 5),
+          );
+        }
+
+      },
+      child: Scaffold(
+        body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
@@ -143,20 +174,32 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
                     SizedBox(height: 3.h),
                     
                     // Submit Button
-                    PrimaryButton(
-                      text: 'Kirim Token',
-                      function: () {
-                        if (_formKey.currentState!.validate()) {
-                          print('Email: ${_emailController.text}');
-                        }
+                    BlocBuilder<ForgotCubit, ForgotState>(
+                      builder: (context, state) {
+                        final isLoading = state is ForgotLoading;
+                        
+                        return PrimaryButton(
+                          text: isLoading ? 'Mengirim...' : 'Kirim Token',
+                          function: isLoading
+                              ? () {} 
+                              : () {
+                                  if (_formKey.currentState!.validate()) {
+                                    final payload = ForgotRequest(
+                                      email: _emailController.text,
+                                    );
+
+                                    context.read<ForgotCubit>().forgotPassword(payload);
+                                  }
+                                },
+                          width: double.infinity,
+                          height: 6.h,
+                          backgroundColor: isLoading ? neutralSecondary : primaryColor600,
+                          textColor: whiteColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          borderRadius: 12,
+                        );
                       },
-                      width: double.infinity,
-                      height: 6.h,
-                      backgroundColor: primaryColor600,
-                      textColor: whiteColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      borderRadius: 12,
                     ),
                     
                     SizedBox(height: 4.h),
@@ -167,6 +210,7 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
           ),
         ),
       ),
+      ), 
     );
   }
 }
