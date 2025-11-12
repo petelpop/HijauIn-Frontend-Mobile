@@ -16,4 +16,7 @@ class ApiEndpoint {
   // Mapin Endpoints
   static String wasteLocationsNearby(lat, long) => '$baseUrl/loka/nearby?lat=$lat&lng=$long&radius=1500';
   static String wasteLocationsNearbyWithCategory(lat, long,categories) => '$baseUrl/loka/nearby?lat=$lat&lng=$long&radius=1500&categories=$categories';
+
+  static String aqicnMapsUrl(String? lat, String? lng, String? lat2, String? lng2, String token) => "$aqiBaseUrl/v2/map/bounds?latlng=$lat,$lng,$lat2,$lng2&networks=all&token=$token";
+
 }

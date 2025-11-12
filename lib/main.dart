@@ -6,6 +6,7 @@ import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/login/l
 import 'package:hijauin_frontend_mobile/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/cubit/aqi_home/aqi_widget_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/main/cubit/main_page_cubit.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/aqi_map/aqi_map_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin/mapin_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/waste/waste_cubit.dart';
 import 'package:hijauin_frontend_mobile/utils/route.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => MainPageCubit()),
         BlocProvider(create: (context) => MapinCubit()),
         BlocProvider(create: (context) => WasteCubit()),
+        BlocProvider(create: (context) => AqiMapCubit()),
         BlocProvider(create: (context) => AqiWidgetCubit()),
       ],
       child: Sizer(

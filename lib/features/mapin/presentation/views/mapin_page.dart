@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:hijauin_frontend_mobile/features/mapin/data/models/location_model.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/data/models/aqi_location_model.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/data/models/waste_location_model.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/air_quality_bottom_sheet.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/aqi_markers_builder.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/mode_selector.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/trash_location_bottom_sheet.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/trash_markers_builder.dart';
+import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/aqi_map/aqi_map_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin/mapin_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/waste/waste_cubit.dart';
 import 'package:latlong2/latlong.dart';
@@ -25,49 +27,18 @@ class _MapinPageState extends State<MapinPage> {
   
   double _userLatitude = -7.048506770073256;
   double _userLongitude = 110.44122458341415;
-  
-  // TODO: Dummy data kualitas udara
-  final List<AirQualityLocation> _airQualityLocations = [
-    AirQualityLocation(
-      id: '1',
-      name: 'Tembalang',
-      latitude: -6.2088,
-      longitude: 106.8456,
-      aqiValue: 50,
-      quality: 'Baik',
-      message: 'Udara bersih, nikmati harimu di luar ruangan!',
-    ),
-    AirQualityLocation(
-      id: '2',
-      name: 'Banyumanik',
-      latitude: -6.2100,
-      longitude: 106.8470,
-      aqiValue: 110,
-      quality: 'Tidak Sehat',
-      message: 'Gunakan masker jika beraktivitas di luar',
-    ),
-    AirQualityLocation(
-      id: '3',
-      name: 'Semarang Tengah',
-      latitude: -6.2070,
-      longitude: 106.8440,
-      aqiValue: 50,
-      quality: 'Baik',
-      message: 'Udara bersih',
-    ),
-  ];
 
   WasteLocationDataModel? _selectedTrashLocation;
-  AirQualityLocation? _selectedAirLocation;
+  AqiLokaDataModel? _selectedAirLocation;
 
   @override
   void initState() {
     super.initState();
     context.read<MapinCubit>().setMode(MapMode.tempatSampah);
-    _getUserLocationAndFetchWaste();
+    _getUserLocationAndFetchData();
   }
 
-  Future<void> _getUserLocationAndFetchWaste() async {
+  Future<void> _getUserLocationAndFetchData() async {
         // TODO: lokasi masih menggunakan lokasi FSM
     /*
     try {
@@ -85,6 +56,10 @@ class _MapinPageState extends State<MapinPage> {
         );
         
         context.read<WasteCubit>().fetchWasteLocations(
+          position.latitude,
+          position.longitude,
+        );
+        context.read<AqiMapCubit>().fetchAqiLocations(
           position.latitude,
           position.longitude,
         );
@@ -106,8 +81,16 @@ class _MapinPageState extends State<MapinPage> {
             lastPosition.latitude,
             lastPosition.longitude,
           );
+          context.read<AqiMapCubit>().fetchAqiLocations(
+            lastPosition.latitude,
+            lastPosition.longitude,
+          );
         } else {
           context.read<WasteCubit>().fetchWasteLocations(
+            _userLatitude,
+            _userLongitude,
+          );
+          context.read<AqiMapCubit>().fetchAqiLocations(
             _userLatitude,
             _userLongitude,
           );
@@ -118,10 +101,18 @@ class _MapinPageState extends State<MapinPage> {
         _userLatitude,
         _userLongitude,
       );
+      context.read<AqiMapCubit>().fetchAqiLocations(
+        _userLatitude,
+        _userLongitude,
+      );
     }
     */
     
     context.read<WasteCubit>().fetchWasteLocations(
+      _userLatitude,
+      _userLongitude,
+    );
+    context.read<AqiMapCubit>().fetchAqiLocations(
       _userLatitude,
       _userLongitude,
     );
@@ -172,11 +163,27 @@ class _MapinPageState extends State<MapinPage> {
                       },
                     )
                   else
-                    MarkerLayer(markers: _buildAirQualityMarkers()),
+                    BlocBuilder<AqiMapCubit, AqiMapState>(
+                      builder: (context, aqiState) {
+                        if (aqiState is AqiMapLoaded) {
+                          return MarkerLayer(
+                            markers: AqiMarkersBuilder.buildMarkers(
+                              locations: aqiState.aqiLoka.data ?? [],
+                              onMarkerTap: (location) {
+                                setState(() {
+                                  _selectedAirLocation = location;
+                                  _selectedTrashLocation = null;
+                                });
+                              },
+                            ),
+                          );
+                        }
+                        return MarkerLayer(markers: []);
+                      },
+                    ),
                 ],
               ),
 
-              // Mode Selector
               Positioned(
                 top: MediaQuery.of(context).padding.top + 16,
                 left: 5.w,
@@ -205,59 +212,13 @@ class _MapinPageState extends State<MapinPage> {
                 ),
               if (_selectedAirLocation != null)
                 AirQualityBottomSheet(
-                  location: _selectedAirLocation!,
-                  onClose: () {
-                    setState(() {
-                      _selectedAirLocation = null;
-                    });
-                  },
+                  aqi: _selectedAirLocation!.aqi,
+                  city: _selectedAirLocation!.station?.name,
                 ),
             ],
           ),
         );
       },
     );
-  }
-
-  List<Marker> _buildAirQualityMarkers() {
-    return _airQualityLocations.map((location) {
-      Color markerColor = location.aqiValue <= 50
-          ? Color(0xFF10B981) 
-          : location.aqiValue <= 100
-              ? Color(0xFFFBBF24) 
-              : Color(0xFFEF4444); 
-
-      return Marker(
-        point: LatLng(location.latitude, location.longitude),
-        width: 60,
-        height: 40,
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedAirLocation = location;
-              _selectedTrashLocation = null;
-            });
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: markerColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text(
-                '${location.aqiValue}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }).toList();
   }
 }
