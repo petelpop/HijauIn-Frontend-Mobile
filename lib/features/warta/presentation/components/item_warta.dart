@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
+import 'package:hijauin_frontend_mobile/features/warta/data/models/list_articles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ItemWartaHome extends StatelessWidget {
-  const ItemWartaHome({super.key});
+  final ListArticlesDataModel article;
+  
+  const ItemWartaHome({
+    super.key,
+    required this.article,
+  });
+
+  String _stripHtmlTags(String htmlString) {
+    final RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    return htmlString.replaceAll(exp, '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +44,31 @@ class ItemWartaHome extends StatelessWidget {
             width: double.infinity,
             height: 100,
             decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  Constants.imgTrashItemWarta
-                ),
-                fit: BoxFit.cover,
-              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                imageUrl: article.thumbnailUrl,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  color: Color(0xFFF3F4F6),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF2D746A)),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Container(
+                  color: Color(0xFFF3F4F6),
+                  child: Icon(
+                    Icons.image_not_supported,
+                    color: Color(0xFF9CA3AF),
+                  ),
+                ),
               ),
             ),
           ),
@@ -56,17 +84,19 @@ class ItemWartaHome extends StatelessWidget {
                 SizedBox(
                   width: 155,
                   child: PrimaryText(
-                    text: 'Cara Memilah Sampah Yang Benar: Panduan Lengkap Untuk Rumah Tangga',
+                    text: article.title,
                     color: Color(0xFF111827),
-                    maxLines: 1,
+                    maxLines: 2,
                     textOverflow: TextOverflow.ellipsis,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(height: 4,),
                 SizedBox(
                   width: 155,
                   child: PrimaryText(
-                    text: 'Memilah sampah adalah langkah pertama krusial dalam pengelolaan sampah berkelanjutan.',
+                    text: _stripHtmlTags(article.content),
                     color: Color(0xFF4B5563),
                     maxLines: 2,
                     textOverflow: TextOverflow.ellipsis,

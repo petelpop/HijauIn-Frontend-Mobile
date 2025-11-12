@@ -19,4 +19,7 @@ class ApiEndpoint {
 
   static String aqicnMapsUrl(String? lat, String? lng, String? lat2, String? lng2, String token) => "$aqiBaseUrl/v2/map/bounds?latlng=$lat,$lng,$lat2,$lng2&networks=all&token=$token";
 
+  // Warta Endpoints
+  static String listArticles(String? search, int? page, int? limit) => '$baseUrl/public/articles?search=$search&page=$page&limit=$limit';
+
 }
