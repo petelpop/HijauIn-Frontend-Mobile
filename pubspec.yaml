@@ -59,6 +59,9 @@ dependencies:
   google_fonts: ^6.3.0
   fpdart: ^1.2.0
 
+  # Chat AI
+  google_generative_ai: ^0.4.6
+
   # Maps
   flutter_map: ^7.0.2
   latlong2: ^0.9.1

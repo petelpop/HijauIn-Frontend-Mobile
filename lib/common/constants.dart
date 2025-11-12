@@ -15,6 +15,7 @@ class Constants {
 
   // askflo
   static const String icChatbotAskflo = "$iconsPath/ic_chatbot_askflo.png";
+  static const String icAskfloProfile = "$iconsPath/ic_askflo_profile.png";
 
   // navbar
   static const String icAskfloActive = "$iconsPath/ic_askflo_active.png";

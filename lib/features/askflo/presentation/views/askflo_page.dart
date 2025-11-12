@@ -3,6 +3,7 @@ import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/askflo/presentation/components/quick_action_button.dart';
+import 'package:hijauin_frontend_mobile/features/askflo/presentation/views/chat_page.dart';
 import 'package:sizer/sizer.dart';
 
 class AskfloPage extends StatefulWidget {
@@ -24,8 +25,12 @@ class _AskfloPageState extends State<AskfloPage> {
 
   void _navigateToChat(String initialMessage) {
     if (initialMessage.trim().isEmpty) return;
-    // TODO: Navigate to chat page with initial message
-    // context.push('/askflo/chat', extra: initialMessage);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatPage(initialMessage: initialMessage),
+      ),
+    );
   }
 
   @override
@@ -226,7 +231,6 @@ class _AskfloPageState extends State<AskfloPage> {
                               ),
                               SizedBox(height: 3.h),
             
-                              //TODO: Quick Action Buttons
                               Wrap(
                                 alignment: WrapAlignment.start,
                                 spacing: 2.w,
