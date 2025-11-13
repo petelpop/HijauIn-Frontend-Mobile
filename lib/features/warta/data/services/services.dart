@@ -33,12 +33,12 @@ class WartaServices {
       );
       
       if (response.statusCode == 200) {
-        return DetailArticle.fromJson(response.data['data']);
+        return DetailArticle.fromJson(response.data);
       } else {
-        throw Exception('Failed to load article detail');
+        throw Exception('Failed to load article detail: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching article detail: $e');
+      throw Exception('Error: $e');
     }
   }
 }

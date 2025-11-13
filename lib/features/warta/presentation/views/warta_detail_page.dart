@@ -4,8 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:hijauin_frontend_mobile/features/warta/data/services/services.dart';
 import 'package:hijauin_frontend_mobile/features/warta/presentation/cubit/warta_detail/warta_detail_cubit.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
+import 'package:hijauin_frontend_mobile/utils/date_formatter.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:intl/intl.dart';
 
 class WartaDetailPage extends StatelessWidget {
   final String slug;
@@ -14,10 +14,6 @@ class WartaDetailPage extends StatelessWidget {
     super.key,
     required this.slug,
   });
-
-  String _formatDate(DateTime date) {
-    return DateFormat('d MMMM yyyy', 'id_ID').format(date);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +112,7 @@ class WartaDetailPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: PrimaryText(
-                        text: _formatDate(article.createdAt),
+                        text: DateFormatter.formatIndonesian(article.createdAt),
                         fontSize: 14,
                         color: Color(0xFF6B7280),
                       ),
