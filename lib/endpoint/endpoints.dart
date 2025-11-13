@@ -21,5 +21,6 @@ class ApiEndpoint {
 
   // Warta Endpoints
   static String listArticles(String? search, int? page, int? limit) => '$baseUrl/public/articles?search=$search&page=$page&limit=$limit';
+  static String articleDetail(String slug) => '$baseUrl/public/articles/$slug';
 
 }
