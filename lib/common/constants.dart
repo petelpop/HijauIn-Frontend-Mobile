@@ -28,6 +28,8 @@ class Constants {
   static const String icSortirInactive = "$iconsPath/ic_sortir_inactive.png";
   static const String icWartaActive = "$iconsPath/ic_warta_active.png";
   static const String icWartaInactive = "$iconsPath/ic_warta_inactive.png";
+  static const String icLapakInactive = "$iconsPath/ic_lapak_inactive.png";
+  static const String icLapakActive = "$iconsPath/ic_lapak_active.png";
 
 
   // image
@@ -49,5 +51,7 @@ class Constants {
 
   // askflo
   static const String imgBgAskflo = "$imagePath/img_bg_askflo.png";
+
+  // lapak
 
 }

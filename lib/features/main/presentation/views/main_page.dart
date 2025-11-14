@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/features/askflo/presentation/views/askflo_page.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/views/home_page.dart';
+import 'package:hijauin_frontend_mobile/features/lapak/presentation/views/lapak_main_page.dart';
 import 'package:hijauin_frontend_mobile/features/main/cubit/main_page_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/main/presentation/components/navigation_bar.dart';
 import 'package:hijauin_frontend_mobile/features/main/presentation/components/navigation_bar_item.dart';
@@ -24,7 +25,7 @@ class _MainPageState extends State<MainPage> {
         SortirPage(),
         MapinPage(),
         AskfloPage(),
-        WartaPage()
+        LapakMainPage(),
       ];
 
   @override
@@ -77,9 +78,9 @@ class _MainPageState extends State<MainPage> {
                   BottomNavBarItem(
                       index: 4,
                       isSelected: state.index == 4,
-                      title: "Warta",
-                      imageSelected: Constants.icWartaActive,
-                      imageUnselect: Constants.icWartaInactive),
+                      title: "Lapak",
+                      imageSelected: Constants.icLapakActive,
+                      imageUnselect: Constants.icLapakInactive),
                 ],
                 onTap: (int page) =>
                     context.read<MainPageCubit>().setPage(page),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
@@ -12,6 +13,7 @@ import 'package:hijauin_frontend_mobile/features/main/cubit/main_page_cubit.dart
 import 'package:hijauin_frontend_mobile/features/warta/data/services/services.dart';
 import 'package:hijauin_frontend_mobile/features/warta/presentation/components/item_warta.dart';
 import 'package:hijauin_frontend_mobile/features/warta/presentation/cubit/warta_list/warta_list_cubit.dart';
+import 'package:hijauin_frontend_mobile/features/warta/presentation/views/warta_page.dart';
 import 'package:hijauin_frontend_mobile/utils/location_service.dart';
 import 'package:hijauin_frontend_mobile/utils/shared_storage.dart';
 import 'package:hijauin_frontend_mobile/utils/shimmer_card.dart';
@@ -173,10 +175,10 @@ class _HomePageState extends State<HomePage> {
                                   flex: 1,
                                   child: ItemHomeWidget(
                                     iconPath: Constants.icMapinBlack,
-                                    title: "MapIn",
+                                    title: "Warta",
                                     description: "Cari tempat sampah",
                                     onTap: () {
-                                      context.read<MainPageCubit>().setPage(2);
+                                      context.pushNamed(WartaPage.routeName);
                                     },
                                   ),
                                 ),

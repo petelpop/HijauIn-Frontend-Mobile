@@ -4,6 +4,7 @@ import 'package:hijauin_frontend_mobile/features/askflo/presentation/views/chat_
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/forgot_password_email_page.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
+import 'package:hijauin_frontend_mobile/features/home/presentation/views/home_page.dart';
 import 'package:hijauin_frontend_mobile/features/main/presentation/views/main_page.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/views/mapin_page.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/views/onboarding_page.dart';
@@ -60,8 +61,14 @@ class AppRoute {
         return const MainPage();
       },
       routes: [
-
-    // Warta
+        GoRoute(
+          path: '/${HomePage.routeName}',
+          name: HomePage.routeName,
+          builder: (context, state) {
+            return const HomePage();
+          },
+          routes: [
+                // Warta
     GoRoute(
         path: '/${WartaPage.routeName}',
         name: WartaPage.routeName,
@@ -76,7 +83,8 @@ class AppRoute {
             },
           ),
         ]),
-
+          ]
+        ),
     // AskFlo
     GoRoute(
         path: '/${AskfloPage.routeName}',

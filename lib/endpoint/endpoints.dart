@@ -23,4 +23,8 @@ class ApiEndpoint {
   static String listArticles(String? search, int? page, int? limit) => '$baseUrl/public/articles?search=$search&page=$page&limit=$limit';
   static String articleDetail(String slug) => '$baseUrl/public/articles/$slug';
 
+  // Lapak Endpoints
+  static String listProducts = "$baseUrl/products";
+  static String searchListProducts(String query) => '$baseUrl/products?search=$query';
+
 }
