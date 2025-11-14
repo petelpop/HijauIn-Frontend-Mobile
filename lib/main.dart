@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginCubit()),
         BlocProvider(create: (context) => ForgotCubit()),
         BlocProvider(create: (context) => MainPageCubit()),
+        BlocProvider(create: (context) => AqiWidgetCubit()),
         BlocProvider(create: (context) => MapinCubit()),
         BlocProvider(create: (context) => WasteCubit()),
         BlocProvider(create: (context) => AqiMapCubit()),
-        BlocProvider(create: (context) => AqiWidgetCubit()),
       ],
       child: Sizer(
         builder: (context, orientation, screenType) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/warta/data/models/list_articles.dart';
 import 'package:hijauin_frontend_mobile/features/warta/presentation/views/warta_detail_page.dart';
@@ -21,11 +22,9 @@ class ItemWartaHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WartaDetailPage(slug: article.slug),
-          ),
+        context.pushNamed(
+          WartaDetailPage.routeName,
+          pathParameters: {'slug': article.slug},
         );
       },
       child: Container(

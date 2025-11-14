@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/features/warta/data/services/services.dart';
 import 'package:hijauin_frontend_mobile/features/warta/presentation/cubit/warta_detail/warta_detail_cubit.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
@@ -8,6 +9,7 @@ import 'package:hijauin_frontend_mobile/utils/date_formatter.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class WartaDetailPage extends StatelessWidget {
+  static const String routeName = "warta-detail-page";
   final String slug;
 
   const WartaDetailPage({
@@ -26,7 +28,7 @@ class WartaDetailPage extends StatelessWidget {
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Color(0xFF111827)),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
           ),
           title: PrimaryText(
             text: 'Warta',

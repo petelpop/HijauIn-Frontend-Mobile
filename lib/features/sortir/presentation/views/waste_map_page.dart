@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/data/models/waste_location_model.dart';
@@ -89,7 +90,7 @@ class _WasteMapPageState extends State<WasteMapPage> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: colorTextDarkPrimary),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: BlocBuilder<WasteMapCubit, WasteMapState>(

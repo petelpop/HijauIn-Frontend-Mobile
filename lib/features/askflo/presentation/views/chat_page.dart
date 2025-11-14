@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
@@ -68,7 +69,7 @@ class _ChatPageState extends State<ChatPage> {
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: colorTextDarkPrimary),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
           ),
           centerTitle: true,
           title: Row(

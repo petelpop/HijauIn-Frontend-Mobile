@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
@@ -34,11 +35,9 @@ class SortirPage extends StatelessWidget {
               listener: (context, state) async {
                 if (state is SortirClassified) {
 
-                  final action = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SortirDetailPage(result: state.result),
-                    ),
+                  final action = await context.push(
+                    '/${SortirDetailPage.routeName}',
+                    extra: state.result,
                   );
 
                   if (action == 'camera') {

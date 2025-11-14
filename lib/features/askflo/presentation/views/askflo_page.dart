@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
@@ -25,11 +26,9 @@ class _AskfloPageState extends State<AskfloPage> {
 
   void _navigateToChat(String initialMessage) {
     if (initialMessage.trim().isEmpty) return;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChatPage(initialMessage: initialMessage),
-      ),
+    context.pushNamed(
+      ChatPage.routeName,
+      extra: initialMessage.isNotEmpty ? initialMessage : null,
     );
   }
 

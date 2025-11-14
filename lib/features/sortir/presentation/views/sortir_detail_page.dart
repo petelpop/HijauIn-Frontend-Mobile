@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/sortir/data/model/sortir.dart';
-import 'package:hijauin_frontend_mobile/features/sortir/presentation/cubit/waste_map/waste_map_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/sortir/presentation/views/waste_map_page.dart';
 import 'package:sizer/sizer.dart';
 
 class SortirDetailPage extends StatelessWidget {
+  static const String routeName = "sortir-detail-page";
   final SortirModel result;
 
   const SortirDetailPage({
@@ -39,7 +39,7 @@ class SortirDetailPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Color(0xFF111827)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         title: PrimaryText(
           text: 'Hasil Sortir',
@@ -138,14 +138,9 @@ class SortirDetailPage extends StatelessWidget {
                       categoryForApi = 'B3';
                     }
                     
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => WasteMapCubit(),
-                          child: WasteMapPage(category: categoryForApi),
-                        ),
-                      ),
+                    context.pushNamed(
+                      WasteMapPage.routeName,
+                      pathParameters: {'category': categoryForApi},
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -185,7 +180,7 @@ class SortirDetailPage extends StatelessWidget {
                           label: 'Kamera',
                           subtitle: 'Ambil foto langsung',
                           onTap: () {
-                            Navigator.pop(context, 'camera');
+                            context.pop('camera');
                           },
                         ),
                         SizedBox(width: 4.w),
@@ -195,7 +190,7 @@ class SortirDetailPage extends StatelessWidget {
                           label: 'Galeri',
                           subtitle: 'Upload foto dari galeri',
                           onTap: () {
-                            Navigator.pop(context, 'gallery');
+                            context.pop('gallery');
                           },
                         ),
                       ],
