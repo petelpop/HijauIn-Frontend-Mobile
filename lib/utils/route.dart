@@ -5,6 +5,7 @@ import 'package:hijauin_frontend_mobile/features/auth/presentation/views/registe
 import 'package:hijauin_frontend_mobile/features/home/presentation/views/home_page.dart';
 import 'package:hijauin_frontend_mobile/features/main/presentation/views/main_page.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/views/onboarding_page.dart';
+import 'package:hijauin_frontend_mobile/features/sortir/presentation/views/waste_map_page.dart';
 import 'package:hijauin_frontend_mobile/features/splash/presentation/views/splash_page.dart';
 
 class AppRoute {
