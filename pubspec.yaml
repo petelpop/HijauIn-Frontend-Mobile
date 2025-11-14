@@ -61,6 +61,7 @@ dependencies:
 
   # Chat AI
   google_generative_ai: ^0.4.6
+  flutter_markdown: ^0.7.4+1
 
   # TfLite
   flutter_tflite: ^1.0.1

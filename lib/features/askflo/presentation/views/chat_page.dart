@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/constants.dart';
@@ -234,16 +235,84 @@ class _ChatPageState extends State<ChatPage> {
                             ],
                           ),
                         ),
-                      PrimaryText(
-                        text: message.content,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: message.isError 
-                            ? Colors.red.shade900
-                            : (isUser ? Color(0xFF2D746A) : whiteColor),
-                        textAlign: TextAlign.left,
-                        lineHeight: 1.5,
-                      ),
+                      if (isUser)
+                        PrimaryText(
+                          text: message.content,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF2D746A),
+                          textAlign: TextAlign.left,
+                          lineHeight: 1.5,
+                        )
+                      else
+                        MarkdownBody(
+                          data: message.content,
+                          selectable: true,
+                          styleSheet: MarkdownStyleSheet(
+                            p: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: message.isError 
+                                  ? Colors.red.shade900
+                                  : whiteColor,
+                              fontFamily: 'Poppins',
+                              height: 1.5,
+                            ),
+                            h1: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: whiteColor,
+                              fontFamily: 'Poppins',
+                            ),
+                            h2: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: whiteColor,
+                              fontFamily: 'Poppins',
+                            ),
+                            h3: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: whiteColor,
+                              fontFamily: 'Poppins',
+                            ),
+                            strong: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: whiteColor,
+                            ),
+                            em: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              color: whiteColor,
+                            ),
+                            listBullet: TextStyle(
+                              fontSize: 14,
+                              color: whiteColor,
+                            ),
+                            code: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'monospace',
+                              backgroundColor: Colors.white.withOpacity(0.1),
+                              color: whiteColor,
+                            ),
+                            codeblockDecoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            blockquote: TextStyle(
+                              fontSize: 14,
+                              color: whiteColor.withOpacity(0.9),
+                              fontStyle: FontStyle.italic,
+                            ),
+                            blockquoteDecoration: BoxDecoration(
+                              border: Border(
+                                left: BorderSide(
+                                  color: whiteColor.withOpacity(0.5),
+                                  width: 3,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
