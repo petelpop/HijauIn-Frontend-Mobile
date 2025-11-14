@@ -35,8 +35,8 @@ class SortirPage extends StatelessWidget {
               listener: (context, state) async {
                 if (state is SortirClassified) {
 
-                  final action = await context.push(
-                    '/${SortirDetailPage.routeName}',
+                  final action = await context.pushNamed(
+                    SortirDetailPage.routeName,
                     extra: state.result,
                   );
 
