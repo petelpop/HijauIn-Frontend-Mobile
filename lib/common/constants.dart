@@ -4,6 +4,7 @@ class Constants {
   static const String iconsPath = "assets/icons";
   static const String icHijauin = "$iconsPath/ic_hijauin.png";
   static const String icHijauinWhite = "$iconsPath/ic_hijauin_white.png";
+  static const String icLogout = "$iconsPath/ic_logout.png";
 
   // home
   static const String icSortirBlack = "$iconsPath/ic_sortir_black.png";
@@ -16,6 +17,9 @@ class Constants {
   // askflo
   static const String icChatbotAskflo = "$iconsPath/ic_chatbot_askflo.png";
   static const String icAskfloProfile = "$iconsPath/ic_askflo_profile.png";
+
+  // lapak
+  static const String icCartLapak = "$iconsPath/ic_cart_lapak.png";
 
   // navbar
   static const String icAskfloActive = "$iconsPath/ic_askflo_active.png";
@@ -41,6 +45,7 @@ class Constants {
   static const String imgBgAuth = "$imagePath/img_bg_auth.png";
   static const String imgForgotpassVector = "$imagePath/img_forgotpass_vector.png";
   static const String imgBgChatbotBanner = "$imagePath/img_bg_chatbot_banner.png";
+  static const String imgUserPlaceholder = "$imagePath/img_user_placeholder.jpg";
 
   // home
   static const String imgBgHome = "$imagePath/img_bg_home.png";
