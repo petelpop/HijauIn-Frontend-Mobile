@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/data/models/aqi_location_model.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/data/models/waste_location_model.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/air_quality_bottom_sheet.dart';
@@ -11,6 +12,7 @@ import 'package:hijauin_frontend_mobile/features/mapin/presentation/components/t
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/aqi_map/aqi_map_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin/mapin_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/waste/waste_cubit.dart';
+import 'package:hijauin_frontend_mobile/utils/location_service.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,7 +26,9 @@ class MapinPage extends StatefulWidget {
 
 class _MapinPageState extends State<MapinPage> {
   final MapController _mapController = MapController();
+  final LocationService _locationService = LocationService();
   
+  // default location = FSM Undip
   double _userLatitude = -7.048506770073256;
   double _userLongitude = 110.44122458341415;
 
@@ -39,8 +43,6 @@ class _MapinPageState extends State<MapinPage> {
   }
 
   Future<void> _getUserLocationAndFetchData() async {
-        // TODO: lokasi masih menggunakan lokasi FSM
-    /*
     try {
       Position? position = await _locationService.getCurrentLocation();
       
@@ -105,17 +107,7 @@ class _MapinPageState extends State<MapinPage> {
         _userLatitude,
         _userLongitude,
       );
-    }
-    */
-    
-    context.read<WasteCubit>().fetchWasteLocations(
-      _userLatitude,
-      _userLongitude,
-    );
-    context.read<AqiMapCubit>().fetchAqiLocations(
-      _userLatitude,
-      _userLongitude,
-    );
+    }    
   }
 
   @override
@@ -142,6 +134,32 @@ class _MapinPageState extends State<MapinPage> {
                   TileLayer(
                     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.hijauin.app',
+                  ),
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        point: LatLng(_userLatitude, _userLongitude),
+                        width: 20,
+                        height: 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 3,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   if (currentMode == MapMode.tempatSampah)
                     BlocBuilder<WasteCubit, WasteState>(

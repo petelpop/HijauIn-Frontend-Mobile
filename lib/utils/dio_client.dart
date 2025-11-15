@@ -91,6 +91,16 @@ class DioClient {
     }
   }
 
+  Future<Response> patch(String path, {Map<String, dynamic>? queryParameters, dynamic body}) async {
+    try {
+      final response = await _dio.patch(path, queryParameters: queryParameters, data: body);
+      return response;
+    } catch (e) {
+      LoggerService.error('PATCH request failed: $e');
+      rethrow;
+    }
+  }
+
   Future<Response> delete(String path, {Map<String, dynamic>? queryParameters}) async {
     try {
       final response = await _dio.delete(path, queryParameters: queryParameters);

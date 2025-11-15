@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
@@ -8,6 +9,7 @@ import 'package:hijauin_frontend_mobile/features/mapin/data/models/waste_locatio
 import 'package:hijauin_frontend_mobile/features/sortir/presentation/components/waste_location_bottom_sheet.dart';
 import 'package:hijauin_frontend_mobile/features/sortir/presentation/components/waste_markers_builder.dart';
 import 'package:hijauin_frontend_mobile/features/sortir/presentation/cubit/waste_map/waste_map_cubit.dart';
+import 'package:hijauin_frontend_mobile/utils/location_service.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sizer/sizer.dart';
 
@@ -27,7 +29,9 @@ class WasteMapPage extends StatefulWidget {
 
 class _WasteMapPageState extends State<WasteMapPage> {
   final MapController _mapController = MapController();
+  final LocationService _locationService = LocationService();
   
+  // default location = FSM Undip
   double _userLatitude = -7.048506770073256;
   double _userLongitude = 110.44122458341415;
 
@@ -36,12 +40,66 @@ class _WasteMapPageState extends State<WasteMapPage> {
   @override
   void initState() {
     super.initState();
-    _fetchWasteLocations();
+    _getUserLocationAndFetchData();
+  }
+
+  Future<void> _getUserLocationAndFetchData() async {
+    try {
+      Position? position = await _locationService.getCurrentLocation();
+      
+      if (position != null) {
+        setState(() {
+          _userLatitude = position.latitude;
+          _userLongitude = position.longitude;
+        });
+        
+        _mapController.move(
+          LatLng(position.latitude, position.longitude),
+          14.0,
+        );
+        
+        context.read<WasteMapCubit>().fetchWasteLocationsByCategory(
+          position.latitude,
+          position.longitude,
+          widget.category,
+        );
+      } else {
+        Position? lastPosition = await _locationService.getLastKnownPosition();
+        
+        if (lastPosition != null) {
+          setState(() {
+            _userLatitude = lastPosition.latitude;
+            _userLongitude = lastPosition.longitude;
+          });
+          
+          _mapController.move(
+            LatLng(lastPosition.latitude, lastPosition.longitude),
+            14.0,
+          );
+          
+          context.read<WasteMapCubit>().fetchWasteLocationsByCategory(
+            lastPosition.latitude,
+            lastPosition.longitude,
+            widget.category,
+          );
+        } else {
+          context.read<WasteMapCubit>().fetchWasteLocationsByCategory(
+            _userLatitude,
+            _userLongitude,
+            widget.category,
+          );
+        }
+      }
+    } catch (e) {
+      context.read<WasteMapCubit>().fetchWasteLocationsByCategory(
+        _userLatitude,
+        _userLongitude,
+        widget.category,
+      );
+    }
   }
 
   void _fetchWasteLocations() {
-    // TODO: Get user's actual location
-    // For now, using default FSM location
     context.read<WasteMapCubit>().fetchWasteLocationsByCategory(
       _userLatitude,
       _userLongitude,
@@ -109,6 +167,32 @@ class _WasteMapPageState extends State<WasteMapPage> {
                   TileLayer(
                     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.hijauin.app',
+                  ),
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        point: LatLng(_userLatitude, _userLongitude),
+                        width: 20,
+                        height: 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 3,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   if (state is WasteMapLoaded)
                     MarkerLayer(

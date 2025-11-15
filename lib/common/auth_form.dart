@@ -38,7 +38,7 @@ class _AuthFormState extends State<AuthForm> {
             color: whiteColor,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: errorMessage != null ? tidakSehatBColor600 : neutralAccent2,
+              color: errorMessage != null ? redColor : neutralAccent2,
               width: 1,
             ),
           ),
@@ -74,7 +74,7 @@ class _AuthFormState extends State<AuthForm> {
               ),
               prefixIcon: Icon(
                 widget.prefixIcon,
-                color: errorMessage != null ? tidakSehatBColor600 : neutralAccent1,
+                color: errorMessage != null ? redColor : neutralAccent1,
                 size: 20.sp,
               ),
               border: InputBorder.none,

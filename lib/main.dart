@@ -13,10 +13,12 @@ import 'package:hijauin_frontend_mobile/features/sortir/presentation/cubit/waste
 import 'package:hijauin_frontend_mobile/utils/dio_client.dart';
 import 'package:hijauin_frontend_mobile/utils/route.dart';
 import 'package:sizer/sizer.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await initializeDateFormatting('id_ID', null);
   runApp(const MyApp());
 }
 

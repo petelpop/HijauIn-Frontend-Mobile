@@ -40,12 +40,32 @@ class _WartaPageState extends State<WartaPage> {
                     padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                     child: Column(
                       children: [
-
-                        PrimaryText(
-                          text: 'Warta',
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          color: colorTextDarkPrimary,
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Center(
+                              child: PrimaryText(
+                                text: 'Warta',
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                                color: colorTextDarkPrimary,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: colorTextDarkPrimary,
+                                ),
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 1.h),
                         

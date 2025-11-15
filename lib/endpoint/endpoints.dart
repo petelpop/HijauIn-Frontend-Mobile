@@ -28,7 +28,13 @@ class ApiEndpoint {
   static String listProducts = "$baseUrl/products";
   static String searchListProducts(String query) => '$baseUrl/products?search=$query';
   static String getAllCategories = "$baseUrl/product-categories";
-  static String getProductsByCategory(String category) => '$baseUrl//products?category=$category';
+  static String getProductsByCategory(String category) => '$baseUrl/products?category=$category';
   static String productDetail(String id) => '$baseUrl/products/$id';
-
+  static String addToCart = '$baseUrl/cart/items';
+  static String getCart = '$baseUrl/cart';
+  static String updateCart(String id) => "$baseUrl/cart/items/$id";
+  static String deleteCartItem(String id) => "$baseUrl/cart/items/$id";
+  static String checkout = '$baseUrl/transactions/checkout';
+  static String checkPaymentStatus(String transaction_id) => "$baseUrl/transactions/$transaction_id/check-status";
+  static String getHistory = '$baseUrl/transactions';
 }

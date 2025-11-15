@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin/mapin_cubit.dart';
 import 'package:sizer/sizer.dart';
@@ -18,9 +17,10 @@ class ModeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(0.8.h),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: Color(0xFFF3FAF8),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Color(0x14000000),
@@ -38,25 +38,35 @@ class ModeSelector extends StatelessWidget {
                 onModeChanged();
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 2.w),
                 decoration: BoxDecoration(
                   color: currentMode == MapMode.tempatSampah
-                      ? primaryColor600
+                      ? Color(0xFFFFFFFF)
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: currentMode == MapMode.tempatSampah
+                      ? [
+                          BoxShadow(
+                            color: Color(0x14000000),
+                            blurRadius: 8,
+                            offset: Offset(0, 2),
+                          ),
+                        ]
+                      : null,
                 ),
                 child: PrimaryText(
                   text: 'Tempat Sampah',
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: currentMode == MapMode.tempatSampah
-                      ? Colors.white
-                      : colorTextDarkSecondary,
+                      ? Color(0xFF111827)
+                      : Color(0xFF4B5563),
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
           ),
+          SizedBox(width: 1.w),
           Expanded(
             child: GestureDetector(
               onTap: () {
@@ -64,20 +74,29 @@ class ModeSelector extends StatelessWidget {
                 onModeChanged();
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                padding: EdgeInsets.symmetric(vertical: 1.8.h, horizontal: 2.w),
                 decoration: BoxDecoration(
                   color: currentMode == MapMode.kualitasUdara
-                      ? primaryColor600
+                      ? Color(0xFFFFFFFF)
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: currentMode == MapMode.kualitasUdara
+                      ? [
+                          BoxShadow(
+                            color: Color(0x14000000),
+                            blurRadius: 8,
+                            offset: Offset(0, 2),
+                          ),
+                        ]
+                      : null,
                 ),
                 child: PrimaryText(
                   text: 'Kualitas Udara',
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: currentMode == MapMode.kualitasUdara
-                      ? Colors.white
-                      : colorTextDarkSecondary,
+                      ? Color(0xFF111827)
+                      : Color(0xFF4B5563),
                   textAlign: TextAlign.center,
                 ),
               ),

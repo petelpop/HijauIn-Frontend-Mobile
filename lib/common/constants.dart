@@ -9,6 +9,7 @@ class Constants {
   // home
   static const String icSortirBlack = "$iconsPath/ic_sortir_black.png";
   static const String icMapinBlack = "$iconsPath/ic_mapin_black.png";
+  static const String icWartaBlack = "$iconsPath/ic_warta_black.png";
 
   // sortir
   static const String icCameraSortir = "$iconsPath/ic_camera_sortir.png";
@@ -20,6 +21,7 @@ class Constants {
 
   // lapak
   static const String icCartLapak = "$iconsPath/ic_cart_lapak.png";
+  static const String icHistoryLapak = "$iconsPath/ic_history_lapak.png";
 
   // navbar
   static const String icAskfloActive = "$iconsPath/ic_askflo_active.png";
