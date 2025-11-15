@@ -1,15 +1,13 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:hijauin_frontend_mobile/common/colors.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 
 class AqiWidget extends StatelessWidget {
-  String? aqi;
-  Color? colorAqi;
-  Color? colorBorderAqi;
+  final String? aqi;
+  final Color? colorAqi;
+  final Color? colorBorderAqi;
 
-  AqiWidget({
+  const AqiWidget({
     super.key,
     this.aqi,
     this.colorAqi,
@@ -17,6 +15,8 @@ class AqiWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isRange = (aqi?.contains('-') ?? false) || (aqi?.contains('+') ?? false);
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -28,27 +28,39 @@ class AqiWidget extends StatelessWidget {
           width: 5
         )
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          PrimaryText(
-            text: aqi ?? "...",
-            fontSize: 26,
-            letterSpacing: -0.1,
-            color: whiteColor,
-            fontWeight: FontWeight.w800,
-            lineHeight: 1,),
-            PrimaryText(
-              text: "AQI",
-              color: colorTextLightPrimary,
-              letterSpacing: -0.1,
-              fontWeight: FontWeight.w900,
-              fontSize: 12,
-              lineHeight: 1.33,
-              )
-        ],
-      ),
+      child: isRange
+          ? Center(
+              child: PrimaryText(
+                text: aqi ?? "...",
+                fontSize: 14,
+                letterSpacing: -0.1,
+                color: whiteColor,
+                fontWeight: FontWeight.w800,
+                lineHeight: 1,
+              ),
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                PrimaryText(
+                  text: aqi ?? "...",
+                  fontSize: 26,
+                  letterSpacing: -0.1,
+                  color: whiteColor,
+                  fontWeight: FontWeight.w800,
+                  lineHeight: 1,
+                ),
+                PrimaryText(
+                  text: "AQI",
+                  color: colorTextLightPrimary,
+                  letterSpacing: -0.1,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 12,
+                  lineHeight: 1.33,
+                )
+              ],
+            ),
     );
   }
 }
