@@ -10,7 +10,7 @@
 
 | Platform | Link Download | Status |
 |----------|--------------|--------|
-| 🤖 Android APK | [Download APK](https://drive.google.com/drive/folders/1yJs2OofEjwxtj2k1CK-9elPxpMVYEBeS?usp=sharing) | ✅ Available |
+| 🤖 Android APK | [Download APK](https://drive.google.com/file/d/1AszCFIWfrb8XTfTKvnsERAl9imiW5kas/view?usp=sharing) | ✅ Available |
 | 🍎 iOS | Coming Soon |
 
 > **Catatan**: Untuk instalasi APK di Android, pastikan Anda mengizinkan instalasi dari sumber tidak dikenal di pengaturan perangkat.
