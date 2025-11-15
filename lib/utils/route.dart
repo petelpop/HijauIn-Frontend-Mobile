@@ -5,6 +5,7 @@ import 'package:hijauin_frontend_mobile/features/auth/presentation/views/forgot_
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/login_page.dart';
 import 'package:hijauin_frontend_mobile/features/auth/presentation/views/register_page.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/views/home_page.dart';
+import 'package:hijauin_frontend_mobile/features/lapak/presentation/views/history_page.dart';
 import 'package:hijauin_frontend_mobile/features/main/presentation/views/main_page.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/views/mapin_page.dart';
 import 'package:hijauin_frontend_mobile/features/onboarding/presentation/views/onboarding_page.dart';
@@ -61,6 +62,14 @@ class AppRoute {
         return const MainPage();
       },
       routes: [
+        // History Page
+        GoRoute(
+          path: HistoryPage.routeName,
+          name: HistoryPage.routeName,
+          builder: (context, state) {
+            return const HistoryPage();
+          },
+        ),
         GoRoute(
           path: '/${HomePage.routeName}',
           name: HomePage.routeName,
