@@ -10,6 +10,7 @@ import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/aqi_ma
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/mapin/mapin_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/mapin/presentation/cubit/waste/waste_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/sortir/presentation/cubit/waste_map/waste_map_cubit.dart';
+import 'package:hijauin_frontend_mobile/utils/dio_client.dart';
 import 'package:hijauin_frontend_mobile/utils/route.dart';
 import 'package:sizer/sizer.dart';
 
@@ -38,6 +39,10 @@ class MyApp extends StatelessWidget {
       ],
       child: Sizer(
         builder: (context, orientation, screenType) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            DioClient.setContext(context);
+          });
+          
           return MaterialApp.router(
             title: 'HijauIn',
             theme: ThemeData(

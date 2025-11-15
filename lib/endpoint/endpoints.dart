@@ -9,6 +9,7 @@ class ApiEndpoint {
   static String register = '$baseUrl/auth/register';
   static String login = '$baseUrl/auth/login';
   static String forgotPassword = '$baseUrl/auth/forgot-password';
+  static String logout = '$baseUrl/auth/logout';
 
   // Home Endpoints
   static String aqiHomeWidget(lat, long) => '$aqiBaseUrl/feed/geo:$lat;$long/?token=$aqiToken';
@@ -26,5 +27,8 @@ class ApiEndpoint {
   // Lapak Endpoints
   static String listProducts = "$baseUrl/products";
   static String searchListProducts(String query) => '$baseUrl/products?search=$query';
+  static String getAllCategories = "$baseUrl/product-categories";
+  static String getProductsByCategory(String category) => '$baseUrl//products?category=$category';
+  static String productDetail(String id) => '$baseUrl/products/$id';
 
 }

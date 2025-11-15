@@ -8,6 +8,7 @@ import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/components/aqi_home_shimmer.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/components/aqi_home_widget.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/components/item_home_widget.dart';
+import 'package:hijauin_frontend_mobile/features/home/presentation/components/logout_confirmation_modal.dart';
 import 'package:hijauin_frontend_mobile/features/home/presentation/cubit/aqi_home/aqi_widget_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/main/cubit/main_page_cubit.dart';
 import 'package:hijauin_frontend_mobile/features/warta/data/services/services.dart';
@@ -29,6 +30,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final LocationService _locationService = LocationService();
   String userName = "User";
+  bool _showLogoutButton = false;
 
   @override
   void initState() {
@@ -119,21 +121,95 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          PrimaryText(
-                            text: "Hi, $userName 👋",
-                            fontWeight: FontWeight.w600,
-                            color: colorTextDarkPrimary,
-                            fontSize: 18,
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          PrimaryText(
-                            text:
-                                "Langkah kecilmu bisa berarti besar untuk bumi.",
-                            color: colorTextDarkSecondary,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _showLogoutButton = !_showLogoutButton;
+                                      });
+                                    },
+                                    child: ClipOval(
+                                      child: Image.asset(
+                                        Constants.imgUserPlaceholder,
+                                        width: 48,
+                                        height: 48,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        PrimaryText(
+                                          text: "Hi, $userName 👋",
+                                          fontWeight: FontWeight.w600,
+                                          color: colorTextDarkPrimary,
+                                          fontSize: 18,
+                                        ),
+                                        SizedBox(height: 4),
+                                        PrimaryText(
+                                          text: "Langkah kecilmu bisa berarti besar untuk bumi.",
+                                          color: colorTextDarkSecondary,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              
+                              if (_showLogoutButton)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _showLogoutButton = false;
+                                      });
+                                      showLogoutConfirmationModal(context);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                      decoration: BoxDecoration(
+                                        color: whiteColor,
+                                        borderRadius: BorderRadius.circular(12),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color(0x14000000),
+                                            blurRadius: 8,
+                                            offset: Offset(0, 2),
+                                            spreadRadius: 0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Image.asset(
+                                            Constants.icLogout,
+                                            width: 20,
+                                            height: 20,
+                                          ),
+                                          SizedBox(width: 8),
+                                          PrimaryText(
+                                            text: "Logout",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: colorTextDarkPrimary,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                           SizedBox(height: 32),
                           BlocBuilder<AqiWidgetCubit, AqiWidgetState>(
