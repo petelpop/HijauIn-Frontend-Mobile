@@ -25,14 +25,29 @@ class TrashLocationBottomSheet extends StatelessWidget {
     final lat = location.coordinates.latitude;
     final lng = location.coordinates.longitude;
     
-    final url = Uri.parse(
-      'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng&travelmode=driving'
+    final geoUri = Uri.parse('geo:0,0?q=$lat,$lng(${Uri.encodeComponent(location.name)})');
+    
+    final webUrl = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=$lat,$lng'
     );
     
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch Google Maps';
+    try {
+      final launched = await launchUrl(
+        geoUri,
+        mode: LaunchMode.externalApplication,
+      );
+      
+      if (!launched) {
+        await launchUrl(
+          webUrl,
+          mode: LaunchMode.externalApplication,
+        );
+      }
+    } catch (e) {
+      await launchUrl(
+        webUrl,
+        mode: LaunchMode.externalApplication,
+      );
     }
   }
 
