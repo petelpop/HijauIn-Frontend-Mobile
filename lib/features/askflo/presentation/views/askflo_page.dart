@@ -5,6 +5,7 @@ import 'package:hijauin_frontend_mobile/common/constants.dart';
 import 'package:hijauin_frontend_mobile/common/primary_text.dart';
 import 'package:hijauin_frontend_mobile/features/askflo/presentation/components/quick_action_button.dart';
 import 'package:hijauin_frontend_mobile/features/askflo/presentation/views/chat_page.dart';
+import 'package:hijauin_frontend_mobile/utils/shared_storage.dart';
 import 'package:sizer/sizer.dart';
 
 class AskfloPage extends StatefulWidget {
@@ -17,11 +18,19 @@ class AskfloPage extends StatefulWidget {
 
 class _AskfloPageState extends State<AskfloPage> {
   final TextEditingController _messageController = TextEditingController();
+  String userName = "User";
 
   @override
   void dispose() {
     _messageController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadUserData();
   }
 
   void _navigateToChat(String initialMessage) {
@@ -31,6 +40,16 @@ class _AskfloPageState extends State<AskfloPage> {
       extra: initialMessage.isNotEmpty ? initialMessage : null,
     );
   }
+
+    Future<void> _loadUserData() async {
+    final userData = await SharedStorage.getUserData();
+    if (userData != null) {
+      setState(() {
+        userName = userData.namaPanggilan;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +82,7 @@ class _AskfloPageState extends State<AskfloPage> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Hi, Hani',
+                          text: 'Hi, $userName',
                           style: TextStyle(
                             color: colorTextDarkPrimary,
                             fontSize: 24,
