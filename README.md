@@ -149,7 +149,7 @@ Aplikasi menggunakan JWT (JSON Web Token) untuk autentikasi:
 
 ## 📞 Kontak & Support
 
-*   **Gmail**: [m.naufal.s.k@email.com](https://mail.google.com/mail/?view=cm&fs=1&to=m.naufal.s.k@email.com)
+*   **Gmail**: [m.naufal.s.k@gmail.com](https://mail.google.com/mail/?view=cm&fs=1&to=m.naufal.s.k@gmail.com)
 
 ---
 
